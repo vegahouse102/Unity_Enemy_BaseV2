@@ -1,0 +1,14 @@
+{
+  "name": "com.vega.enemy-base-v2",
+  "version": "1.0.1",
+  "displayName": "Vega Enemy Base",
+  "description": "적 캐릭터의 기본 로직과 에디터 툴을 포함하는 베이스 패키지 v2",
+  "unity": "2021.3",
+  "author": {
+    "name": "Vega"
+  },
+  "dependencies": {
+    "com.unity.modules.ui": "1.0.0",
+    "com.unity.behavior" : "1.0.15"
+  }
+}
