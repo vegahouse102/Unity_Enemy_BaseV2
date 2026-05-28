@@ -328,7 +328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   _agent: {fileID: 5802215905982552733}
-  _enemyEntity: {fileID: 0}
+  _enemyEntity: {fileID: 4023770342082182608}
 --- !u!114 &6715059640525064308
 MonoBehaviour:
   m_ObjectHideFlags: 0
