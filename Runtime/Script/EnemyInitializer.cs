@@ -1,16 +1,35 @@
 using UnityEngine;
 
-public class EnemyInitializer : MonoBehaviour
+namespace Enemy
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+	public class EnemyInitializer : MonoBehaviour
+	{
+		[SerializeField]
+		Animator _animator;
+		[SerializeField]
+		EnemyHealth _health;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
+		[SerializeField]
+		RuntimeAnimatorController _controller;
+		[SerializeField]
+		EnemyHealthSO _healthSO;
+
+
+		void Start()
+		{
+
+#if UNITY_EDITOR
+			Debug.Assert(_animator != null);
+			Debug.Assert(_health != null);
+			Debug.Assert(_controller != null);
+			Debug.Assert(_healthSO != null);
+#endif
+			_animator.runtimeAnimatorController = _controller;
+			_health.Initialize(_healthSO);
+
+		}
+
+	}
 }
+

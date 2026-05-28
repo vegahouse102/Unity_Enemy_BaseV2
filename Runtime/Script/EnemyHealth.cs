@@ -5,16 +5,17 @@ namespace Enemy
 {
 	public class EnemyHealth : MonoBehaviour
 	{
-		[SerializeField]
-		private EnemyHealthSO _enemyHealthSO;
+
 
 		private int _curHealth;
-
+		private EnemyHealthSO _enemyHealthSO;
 
 		public UnityEvent<DamageInfo> OnDead;
 		public UnityEvent<DamageInfo> OnHurt;
-		private void Awake()
+
+		public void Initialize(EnemyHealthSO enemyHealthSO)
 		{
+			_enemyHealthSO = enemyHealthSO;
 			_curHealth = _enemyHealthSO.MaxHealth;
 		}
 		public int GetCurHealth()
