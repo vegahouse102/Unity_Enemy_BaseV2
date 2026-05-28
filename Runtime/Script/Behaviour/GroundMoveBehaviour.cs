@@ -39,7 +39,7 @@ namespace Enemy
 		[SerializeField, Min(0)]
 		private float _minRandomMoveTime;
 		[SerializeField,Min(0)]
-		private float _valocity;
+		private float _velocity;
 
 
 
@@ -115,7 +115,7 @@ namespace Enemy
 					
 			}
 			
-			_rigid.linearVelocityX = dir * _valocity;
+			_rigid.linearVelocityX = dir * _velocity;
 
 			return Node.Status.Running;
 		}
