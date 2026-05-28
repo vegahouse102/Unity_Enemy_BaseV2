@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Enemy
+namespace Sensor
 {
 	public class PlayerFinder : MonoBehaviour
 	{

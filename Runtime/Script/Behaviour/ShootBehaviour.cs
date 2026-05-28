@@ -1,6 +1,7 @@
 using Damage;
 using Unity.Behavior;
 using UnityEngine;
+using Sensor;
 
 namespace Enemy.Cleaner
 {
@@ -19,7 +20,10 @@ namespace Enemy.Cleaner
 		private PlayerFinder _enemyPlayerFinder;
 
 		[SerializeField] 
-		private EnemyStateController _stateController;
+		private EnemyEntity  _enemyEntity;
+
+		[SerializeField]
+		private EnemyCurDirectionHandler _enemyCurDirectionHandler;
 
 
 		[SerializeField]
@@ -40,7 +44,8 @@ namespace Enemy.Cleaner
 			Debug.Assert(_bulletPos != null);
 			Debug.Assert(_bullet != null);
 			Debug.Assert(_enemyPlayerFinder != null);
-			Debug.Assert(_stateController != null);
+			Debug.Assert(_enemyEntity != null);
+			Debug.Assert(_enemyCurDirectionHandler != null);
 #endif
 		}
 		public override Node.Status OnStart()
@@ -55,9 +60,9 @@ namespace Enemy.Cleaner
 			if (_remainShootCount > 0)
 			{
 				GameObject player = _enemyPlayerFinder.GetPlayerOrNull();
-				if ((player.transform.position.x < transform.position.x && _stateController.GetXDirection() > 0)
-					|| (player.transform.position.x > transform.position.x && _stateController.GetXDirection() < 0))
-					_stateController.Turn();
+				if ((player.transform.position.x < transform.position.x && _enemyCurDirectionHandler.GetXDirection() > 0)
+					|| (player.transform.position.x > transform.position.x && _enemyCurDirectionHandler.GetXDirection() < 0))
+					_enemyCurDirectionHandler.Turn();
 				if (Time.time >= _lastShootTime + _shootWaitTime)
 				{
 					_lastShootTime = Time.time;
@@ -68,7 +73,7 @@ namespace Enemy.Cleaner
 
 					Projectile projectile = bullet.GetComponent<Projectile>();
 					DamageTrigger trigger = bullet.GetComponent<DamageTrigger>();
-					trigger.SetAttacker(_stateController.GetEnemyObject());
+					trigger.SetAttacker(_enemyEntity.GetEnemyObject());
 
 					if (player != null)
 					{

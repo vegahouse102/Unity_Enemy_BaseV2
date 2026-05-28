@@ -10,12 +10,12 @@ namespace Enemy
 	public class TurnBehaviour : EnemyBehaviour
 	{
 		[SerializeField]
-		EnemyStateController _baseBehaviour;
+		EnemyCurDirectionHandler _directonHandler;
 
 		private void Awake()
 		{
 #if UNITY_EDITOR
-			Debug.Assert( _baseBehaviour != null );
+			Debug.Assert( _directonHandler != null );
 #endif
 		}
 		public override void OnEnd()
@@ -24,7 +24,7 @@ namespace Enemy
 
 		public override Node.Status OnStart()
 		{
-			_baseBehaviour.Turn();
+			_directonHandler.Turn();
 			return Node.Status.Success;
 		}
 

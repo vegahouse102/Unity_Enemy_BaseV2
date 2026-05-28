@@ -10,7 +10,7 @@ namespace Enemy
 		[SerializeField]
 		private Rigidbody2D _rigid;
 		[SerializeField]
-		private EnemyStateController _controller;
+		private EnemyCurDirectionHandler _directionRelay;
 		[SerializeField]
 		private Animator _animator;
 		[SerializeField]
@@ -51,7 +51,7 @@ namespace Enemy
 		private void Awake()
 		{
 #if UNITY_EDITOR
-			Debug.Assert( _controller != null );
+			Debug.Assert( _directionRelay != null );
 			Debug.Assert( _rigid != null );
 			Debug.Assert(_animator != null );
 			Debug.Assert(_sensorContext!=null);
@@ -83,7 +83,7 @@ namespace Enemy
 
 			_curTime += Time.deltaTime;
 
-			int dir = _controller.GetXDirection();
+			int dir = _directionRelay.GetXDirection();
 			if (!_isFrontMove)
 			{
 				dir = -dir;
@@ -103,7 +103,7 @@ namespace Enemy
 			{
 				if(Time.time - _lastTurnTime > _turnCooldown)
 				{
-					_controller.Turn();
+					_directionRelay.Turn();
 					dir = -dir;
 					_lastTurnTime = Time.time;
 				}

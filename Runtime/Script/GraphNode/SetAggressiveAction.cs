@@ -12,14 +12,14 @@ public partial class SetAggressiveAction : Action
 	[SerializeReference] public BlackboardVariable<GameObject> Self;
 	[SerializeReference] public BlackboardVariable<bool> Value;
 
-	EnemyStateController _baseBehaviour;
+	EnemyAggressiveRelay _baseBehaviour;
 	protected override Status OnStart()
 	{
 		if(_baseBehaviour==null)
-			_baseBehaviour = Self.Value.GetComponent<EnemyStateController>();
+			_baseBehaviour = Self.Value.GetComponent<EnemyAggressiveRelay>();
 		if (_baseBehaviour == null)
 			return Status.Failure;
-		_baseBehaviour.SetAggressive(Value);
+		_baseBehaviour.SetPeacefull(!Value);
 		return Status.Success;
 	}
 
