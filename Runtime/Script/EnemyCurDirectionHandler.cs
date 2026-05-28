@@ -8,7 +8,7 @@ namespace Enemy
 		[SerializeField]
 		BehaviorGraphAgent _agent;
 		[SerializeField]
-		GameObject _rootObject;
+		EnemyEntity _enemyEntity;
 
 		private BlackboardVariable<bool> _isFrontLeft;
 		private void Start()
@@ -32,7 +32,7 @@ namespace Enemy
 			if (_isFrontLeft == null) return;
 
 			_isFrontLeft.Value = !_isFrontLeft.Value;
-			_rootObject.transform.Rotate(Vector3.up, 180);
+			_enemyEntity.transform.Rotate(Vector3.up, 180);
 		}
 	}
 }
