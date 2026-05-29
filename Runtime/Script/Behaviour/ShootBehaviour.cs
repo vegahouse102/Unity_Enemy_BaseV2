@@ -48,14 +48,14 @@ namespace Enemy.Cleaner
 			Debug.Assert(_enemyCurDirectionHandler != null);
 #endif
 		}
-		public override Node.Status OnStart()
+		public override Node.Status OnStartProcess()
 		{
 			_remainShootCount = _shootCount;
 			_lastShootTime = -999;
 			return Node.Status.Running;
 		}
 
-		public override Node.Status OnUpdate()
+		public override Node.Status OnUpdateProcess()
 		{
 			if (_remainShootCount > 0)
 			{
@@ -95,7 +95,7 @@ namespace Enemy.Cleaner
 			return Node.Status.Success;
 
 		}
-		public override void OnEnd()
+		public override void OnEndProcess()
 		{
 			
 		}

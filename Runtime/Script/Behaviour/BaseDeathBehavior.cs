@@ -14,18 +14,18 @@ namespace Enemy
 			Debug.Assert( _animator != null );
 #endif
 		}
-		public override Node.Status OnStart()
+		public override Node.Status OnStartProcess()
 		{
 			_animator.SetTrigger("Death");
 			return Node.Status.Success;
 		}
 
-		public override Node.Status OnUpdate()
+		public override Node.Status OnUpdateProcess()
 		{
 			return Node.Status.Success;
 		}
 
-		public override void OnEnd()
+		public override void OnEndProcess()
 		{
 			
 		}

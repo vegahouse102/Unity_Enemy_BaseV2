@@ -64,7 +64,7 @@ namespace Enemy
 			}
 		}
 
-		public override Node.Status OnStart()
+		public override Node.Status OnStartProcess()
 		{
 
 			_finishTime = Random.Range(_minRandomMoveTime,_maxRandomMoveTime);
@@ -74,7 +74,7 @@ namespace Enemy
 			return Node.Status.Running;
 		}
 
-		public override Node.Status OnUpdate()
+		public override Node.Status OnUpdateProcess()
 		{
 			if(_curTime >= _finishTime)
 			{
@@ -120,7 +120,7 @@ namespace Enemy
 			return Node.Status.Running;
 		}
 
-		public override void OnEnd()
+		public override void OnEndProcess()
 		{
 			_rigid.linearVelocityX = 0;
 			_animator.SetBool(_moveBoolAnimationName, false);
