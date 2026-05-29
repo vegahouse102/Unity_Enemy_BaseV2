@@ -31,9 +31,9 @@ namespace Enemy
 		}
 
 
-		public abstract Node.Status OnStartProcess();
-		public abstract Node.Status OnUpdateProcess();
-		public abstract void OnEndProcess();
+		protected abstract Node.Status OnStartProcess();
+		protected abstract Node.Status OnUpdateProcess();
+		protected abstract void OnEndProcess();
 	}
 
 }

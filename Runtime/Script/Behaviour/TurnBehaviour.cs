@@ -18,17 +18,17 @@ namespace Enemy
 			Debug.Assert( _directonHandler != null );
 #endif
 		}
-		public override void OnEndProcess()
+		protected override void OnEndProcess()
 		{
 		}
 
-		public override Node.Status OnStartProcess()
+		protected override Node.Status OnStartProcess()
 		{
 			_directonHandler.Turn();
 			return Node.Status.Success;
 		}
 
-		public override Node.Status OnUpdateProcess()
+		protected override Node.Status OnUpdateProcess()
 		{
 			return Node.Status.Success;
 		}

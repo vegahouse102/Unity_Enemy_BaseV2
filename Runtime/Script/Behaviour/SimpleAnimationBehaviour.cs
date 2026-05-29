@@ -23,7 +23,7 @@ namespace Enemy
 			Debug.Assert(_animationBehaviourRely != null);
 #endif
 		}
-		public override Node.Status OnStartProcess()
+		protected override Node.Status OnStartProcess()
 		{
 			_isDone = false;
 			_animationBehaviourRely.SetAnimationBehaviour(this);
@@ -31,13 +31,13 @@ namespace Enemy
 			return Node.Status.Running;
 		}
 
-		public override Node.Status OnUpdateProcess()
+		protected override Node.Status OnUpdateProcess()
 		{
 			if(!_isDone)
 				return Node.Status.Running;
 			return Node.Status.Success;
 		}
-		public override void OnEndProcess()
+		protected override void OnEndProcess()
 		{
 			_animationBehaviourRely.SetAnimationBehaviour(null);
 		}

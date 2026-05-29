@@ -21,7 +21,7 @@ namespace Enemy
 			Debug.Assert(_spriteRenderer != null);
 #endif	
 		}
-		public override Node.Status OnStartProcess()
+		protected override Node.Status OnStartProcess()
 		{
 			_curTime = 0f;
 			_curBlinkTime = 0f;
@@ -29,7 +29,7 @@ namespace Enemy
 			return Node.Status.Running;
 		}
 
-		public override Node.Status OnUpdateProcess()
+		protected override Node.Status OnUpdateProcess()
 		{
 			if (_curTime > _blinkTime)
 				return Node.Status.Success;
@@ -51,7 +51,7 @@ namespace Enemy
 			return Node.Status.Running;
 		}
 
-		public override void OnEndProcess()
+		protected override void OnEndProcess()
 		{
 			_spriteRenderer.color = Color.white;
 		}
