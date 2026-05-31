@@ -2,6 +2,8 @@ using UnityEngine;
 
 namespace Enemy
 {
+	
+	//animatorbehaviour에 사용되는 animationevent
 	public class AnimationBehaviourRelay : MonoBehaviour
 	{
 
@@ -10,6 +12,8 @@ namespace Enemy
 		{
 			_animationBehaviour = animationBehaviour;
 		}
+
+		//animation에 사용되는 event
 		public void Done()
 		{
 			_animationBehaviour?.OnAnimationDone();
