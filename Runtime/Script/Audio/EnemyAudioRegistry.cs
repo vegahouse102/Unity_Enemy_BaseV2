@@ -9,13 +9,11 @@ namespace Enemy.Audio
 		[SerializeField]
 		private List<AudioSourceContainer> _audioSourceContainers = new List<AudioSourceContainer>();
 
-		// 내부적으로 오디오 큐를 빠르게 찾기 위한 딕셔너리
 		private Dictionary<string, AudioSourceContainer> _audioCache = new Dictionary<string, AudioSourceContainer>();
 
 		private void Awake()
 		{
 
-			// 게임이 시작될 때 List 데이터를 Dictionary 데이터로 캐싱
 			InitializeAudioCache();
 		}
 

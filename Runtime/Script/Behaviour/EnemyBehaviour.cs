@@ -1,12 +1,17 @@
 using UnityEngine;
 using Unity.Behavior;
+using UnityEngine.Events;
 namespace Enemy
 {
 	public abstract class EnemyBehaviour :MonoBehaviour
 	{
+		public UnityEvent OnStartEvent;
+		public UnityEvent OnEndEvent;
 		public bool IsRunning { get; private set; }
 		public Node.Status OnStart()
 		{
+
+			OnStartEvent?.Invoke();
 			IsRunning = true;
 			Node.Status status = OnStartProcess();
 			if(status != Node.Status.Running)
@@ -17,15 +22,11 @@ namespace Enemy
 		}
 		public Node.Status OnUpdate()
 		{
-			Node.Status status = OnUpdateProcess();
-			if(status != Node.Status.Running)
-			{
-				IsRunning = false;
-			}
-			return status;
+			return OnUpdateProcess();
 		}
 		public void OnEnd()
 		{
+			OnEndEvent?.Invoke();
 			OnEndProcess();
 			IsRunning = false;
 		}
