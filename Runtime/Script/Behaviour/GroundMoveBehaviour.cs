@@ -101,7 +101,7 @@ namespace Enemy
 			
 			if (hitWall || isCliff)
 			{
-				Debug.Log($"hitwall {hitWall} dir {dir} leftwall {_sensorContext.WallSensor.IsTouchLeftWall} rightwall {_sensorContext.WallSensor.IsTouchRightWall}");
+				//Debug.Log($"hitwall {hitWall} dir {dir} leftwall {_sensorContext.WallSensor.IsTouchLeftWall} rightwall {_sensorContext.WallSensor.IsTouchRightWall}");
 				if (Time.time - _lastTurnTime > _turnCooldown)
 				{
 					_directionHandler.Turn();

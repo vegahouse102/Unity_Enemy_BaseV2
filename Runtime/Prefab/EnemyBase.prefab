@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Enemy::Enemy.GroundMoveBehaviour
   _rigid: {fileID: 4982436358754516707}
-  _directionHandler: {fileID: 0}
+  _directionHandler: {fileID: 5189492288530131770}
   _animator: {fileID: 2033398450380638674}
   _sensorContext: {fileID: 6940280806520128720}
   _moveBoolAnimationName: Walk
@@ -164,7 +164,7 @@ MonoBehaviour:
   _turnCooldown: 0.5
   _maxRandomMoveTime: 3
   _minRandomMoveTime: 5
-  _velocity: 6
+  _velocity: 3
 --- !u!1 &1452830066945873461
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,7 +552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4d4c6e15cce71e48ac0c32b9bbbcd3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _directonHandler: {fileID: 0}
+  _directonHandler: {fileID: 5189492288530131770}
 --- !u!1 &6858735844435078928
 GameObject:
   m_ObjectHideFlags: 0
