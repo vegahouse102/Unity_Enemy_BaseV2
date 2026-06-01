@@ -11,7 +11,7 @@ namespace Enemy
 		[SerializeField]
 		Animator _animator;
 		[SerializeField]
-		AnimationEventBroadcaster _animationEventBroadcaster;
+		AnimationEventRelay _animationEventBroadcaster;
 		[SerializeField]
 		[Tooltip("Animation을 실행시킬 trigger이름")]
 		private string _triggerName;

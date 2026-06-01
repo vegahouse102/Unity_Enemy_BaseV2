@@ -153,6 +153,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40ad469015142c4459f32a3ee226215a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Enemy::Enemy.GroundMoveBehaviour
+  OnStartEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndEvent:
+    m_PersistentCalls:
+      m_Calls: []
   _rigid: {fileID: 4982436358754516707}
   _directionHandler: {fileID: 5189492288530131770}
   _animator: {fileID: 2033398450380638674}
@@ -197,8 +203,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6480943682163611294}
+  m_Children: []
   m_Father: {fileID: 8213077051957223580}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2033398450380638674
@@ -351,6 +356,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22d9887948bb2564982faf69ed75ab7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Enemy::Enemy.BaseHurtBehavior
+  OnStartEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndEvent:
+    m_PersistentCalls:
+      m_Calls: []
   _spriteRenderer: {fileID: 4346564251117856682}
   _blinkTime: 1
   _blinkSpeed: 0.1
@@ -398,6 +409,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec31ad8838b371488d73b58bf89bd7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Enemy::Enemy.BaseDeathBehavior
+  OnStartEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndEvent:
+    m_PersistentCalls:
+      m_Calls: []
   _animator: {fileID: 2033398450380638674}
 --- !u!1 &4783838225573888171
 GameObject:
@@ -429,7 +446,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1888402395682527440}
+  m_Father: {fileID: 8213077051957223580}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &6795257550621952199
 BoxCollider2D:
@@ -552,6 +569,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4d4c6e15cce71e48ac0c32b9bbbcd3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  OnStartEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndEvent:
+    m_PersistentCalls:
+      m_Calls: []
   _directonHandler: {fileID: 5189492288530131770}
 --- !u!1 &6858735844435078928
 GameObject:
@@ -572,6 +595,7 @@ GameObject:
   - component: {fileID: 5802215905982552733}
   - component: {fileID: 2345009442882368742}
   - component: {fileID: 3736210769907878032}
+  - component: {fileID: 1708138108834512558}
   - component: {fileID: 679012634464110374}
   m_Layer: 0
   m_Name: EnemyBase
@@ -594,6 +618,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5087854999844225998}
+  - {fileID: 6480943682163611294}
   - {fileID: 1888402395682527440}
   - {fileID: 3424924038492350565}
   - {fileID: 6606583824647971459}
@@ -804,6 +829,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Enemy::Enemy.Audio.EnemyAudioRegistry
   _audioSourceContainers: []
+--- !u!114 &1708138108834512558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6858735844435078928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dc910ce1a86d96488b1f60f44d88338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Enemy::Enemy.EnemyEventRegistry
 --- !u!114 &679012634464110374
 MonoBehaviour:
   m_ObjectHideFlags: 0
