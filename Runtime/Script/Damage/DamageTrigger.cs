@@ -30,7 +30,7 @@ namespace Damage
 
 			if (collision.gameObject.layer == _targetLayer)
 			{
-				if (collision.TryGetComponent<DamageReceiver>(out var playerDamageReceiver))
+				if (collision.attachedRigidbody.TryGetComponent<DamageReceiver>(out var playerDamageReceiver))
 				{
 					playerDamageReceiver.ReceiveDamage(new DamageInfo(_attacker, _damage));
 
@@ -52,7 +52,7 @@ namespace Damage
 
 			if (collision.gameObject.layer == _targetLayer)
 			{
-				if (collision.TryGetComponent<DamageReceiver>(out var playerDamageReceiver))
+				if (collision.attachedRigidbody.TryGetComponent<DamageReceiver>(out var playerDamageReceiver))
 				{
 					playerDamageReceiver.ReceiveDamage(new DamageInfo(_attacker, _damage));
 
