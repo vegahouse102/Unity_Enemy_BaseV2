@@ -595,7 +595,7 @@ GameObject:
   - component: {fileID: 5802215905982552733}
   - component: {fileID: 2345009442882368742}
   - component: {fileID: 3736210769907878032}
-  - component: {fileID: 1708138108834512558}
+  - component: {fileID: 2000014673075169193}
   - component: {fileID: 679012634464110374}
   m_Layer: 0
   m_Name: EnemyBase
@@ -829,7 +829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Enemy::Enemy.Audio.EnemyAudioRegistry
   _audioSourceContainers: []
---- !u!114 &1708138108834512558
+--- !u!114 &2000014673075169193
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -838,9 +838,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6858735844435078928}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dc910ce1a86d96488b1f60f44d88338, type: 3}
+  m_Script: {fileID: 11500000, guid: 70096d24c7c7d0c4a895c7a5023d6c78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Enemy::Enemy.EnemyEventRegistry
+  _animationEventRelay: {fileID: 1803369462660422163}
+  _eventContainers: []
 --- !u!114 &679012634464110374
 MonoBehaviour:
   m_ObjectHideFlags: 0
