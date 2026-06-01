@@ -1,57 +1,63 @@
 using UnityEngine;
+
 namespace Sensor
 {
 	public class EntityWallSensor : SensorBase
 	{
-		[Header("Default 와 선택된 레이어를 감지합니다")]
-		[SerializeField]
-		private float _rayLength = 0.1f;
-		public bool IsTouchLeftWall { get; private set; }
-		public bool IsTouchRightWall { get; private set;}
+		[Header("선택된 레이어를 감지합니다")]
+		[SerializeField] private float _rayLength = 0.1f;
 
-		private int defaultLayer;
+		[Tooltip("레이 출발지점으로부터 몸통쪽으로 움직일 offset")]
+		[SerializeField] private float _insetOffset = 0.05f;
+
+		public bool IsTouchLeftWall { get; private set; }
+		public bool IsTouchRightWall { get; private set; }
+
+		private int _combinedLayerMask; // Awake에서 한 번만 계산할 마스터 레이어마스크
 
 		private void Awake()
 		{
-			defaultLayer =  LayerMask.GetMask("Default");
+			_combinedLayerMask = _groundMask;
 		}
 
 		private void FixedUpdate()
 		{
+			// 1. 성능 최적화: bounds 캐싱
+			var bounds = _bodyCollider.bounds;
 
-			Vector2 start = new Vector2(_bodyCollider.bounds.min.x, _bodyCollider.bounds.center.y);
-			Vector2 top = new Vector2(_bodyCollider.bounds.min.x, _bodyCollider.bounds.max.y);
-			IsTouchLeftWall = Physics2D.Raycast(
-				start
-				, Vector2.left
-				, _rayLength, _groundMask| defaultLayer) |
+			float centerY = bounds.center.y;
+			float maxY = bounds.max.y;
 
-				Physics2D.Raycast(
-				top
-				, Vector2.left
-				, _rayLength, _groundMask | defaultLayer)
-				;
+			// 2. 버그 예방: 시작 지점을 콜라이더 내부로 살짝 들여보냅니다.
+			float leftStartX = bounds.min.x + _insetOffset;
+			float rightStartX = bounds.max.x - _insetOffset;
+
+	
+			float totalRayLength = _rayLength + _insetOffset;
+
+			// --- 왼쪽 벽 체크 ---
+			Vector2 leftCenter = new Vector2(leftStartX, centerY);
+			Vector2 leftTop = new Vector2(leftStartX, maxY);
+
+			IsTouchLeftWall = Physics2D.Raycast(leftCenter, Vector2.left, totalRayLength, _combinedLayerMask) ||
+					  Physics2D.Raycast(leftTop, Vector2.left, totalRayLength, _combinedLayerMask);
+
 #if UNITY_EDITOR
-				Debug.DrawLine(start, start + Vector2.left * _rayLength);
-				Debug.DrawLine(top, top + Vector2.left * _rayLength);
+			Debug.DrawLine(leftCenter, leftCenter + Vector2.left * totalRayLength, Color.green);
+			Debug.DrawLine(leftTop, leftTop + Vector2.left * totalRayLength, Color.green);
 #endif
 
-			start = new Vector2(_bodyCollider.bounds.max.x, _bodyCollider.bounds.center.y);
-			top = new Vector2(_bodyCollider.bounds.max.x, _bodyCollider.bounds.max.y);
-			IsTouchRightWall = Physics2D.Raycast(
-				start
-				, Vector2.right
-				, _rayLength, _groundMask| defaultLayer)|
-				Physics2D.Raycast(
-				top
-				, Vector2.right
-				, _rayLength, _groundMask | defaultLayer);
+			// --- 오른쪽 벽 체크 ---
+			Vector2 rightCenter = new Vector2(rightStartX, centerY);
+			Vector2 rightTop = new Vector2(rightStartX, maxY);
+
+			IsTouchRightWall = Physics2D.Raycast(rightCenter, Vector2.right, totalRayLength, _combinedLayerMask) ||
+					   Physics2D.Raycast(rightTop, Vector2.right, totalRayLength, _combinedLayerMask);
 
 #if UNITY_EDITOR
-				Debug.DrawLine(start, start + Vector2.right * _rayLength);
-			Debug.DrawLine(top, top + Vector2.right * _rayLength);
+			Debug.DrawLine(rightCenter, rightCenter + Vector2.right * totalRayLength, Color.red);
+			Debug.DrawLine(rightTop, rightTop + Vector2.right * totalRayLength, Color.red);
 #endif
 		}
 	}
 }
-

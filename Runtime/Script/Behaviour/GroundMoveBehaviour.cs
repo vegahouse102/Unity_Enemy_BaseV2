@@ -98,10 +98,11 @@ namespace Enemy
 			bool isCliff = 
 				(_shouldTurnOnCliff && dir < 0 && !_sensorContext.GroundSensor.IsGroundedLeft)
 					|| (_shouldTurnOnCliff && dir > 0 && !_sensorContext.GroundSensor.IsGroundedRight);
-
+			
 			if (hitWall || isCliff)
 			{
-				if(Time.time - _lastTurnTime > _turnCooldown)
+				Debug.Log($"hitwall {hitWall} dir {dir} leftwall {_sensorContext.WallSensor.IsTouchLeftWall} rightwall {_sensorContext.WallSensor.IsTouchRightWall}");
+				if (Time.time - _lastTurnTime > _turnCooldown)
 				{
 					_directionHandler.Turn();
 					dir = -dir;
