@@ -15,7 +15,7 @@ namespace Enemy
 		[SerializeField]
 		private List<EventContainer> _eventContainers = new();
 
-		private Dictionary<string, UnityEvent> _eventCache = new();
+		private Dictionary<string, UnityEvent<string>> _eventCache = new();
 
 
 		private void Awake()
@@ -24,7 +24,7 @@ namespace Enemy
 			{
 				_eventCache.Add(container.EventName, container.Events);
 			}
-			_animationEventRelay.OnTriggerEvent += ExecuteEvent;
+			_animationEventRelay.OnTriggerEvent += ExecuteEvent ;
 		}
 
 
@@ -34,10 +34,11 @@ namespace Enemy
 		}
 		
 
-		private void ExecuteEvent(string eventName)
+		public void ExecuteEvent(string eventName)
 		{
-			if(_eventCache.TryGetValue(eventName,out UnityEvent unityEvent)){
-				unityEvent?.Invoke();
+			if (_eventCache.TryGetValue(eventName, out UnityEvent<string> unityEvent))
+			{
+				unityEvent?.Invoke(eventName);
 			}
 		}
 
@@ -46,7 +47,7 @@ namespace Enemy
 		public  class EventContainer
 		{
 			public string EventName;
-			public UnityEvent Events;
+			public UnityEvent<string> Events;
 		}
 	}
 
