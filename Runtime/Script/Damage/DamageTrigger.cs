@@ -23,15 +23,15 @@ namespace Damage
 			_attacker = transform.root.gameObject;
 		}
 
-		private void OnTriggerEnter2D(Collider2D collision)
+		private void OnTriggerEnter2D(Collider2D collider)
 		{
 			if (!_canAttack) return;
 
 			if (_isOnUpdate) return;
 
-			if (collision.gameObject.layer == _targetLayer)
+			if (collider.gameObject.layer == _targetLayer)
 			{
-				if (collision.attachedRigidbody.TryGetComponent<DamageReceiver>(out var playerDamageReceiver))
+				if (collider.attachedRigidbody.TryGetComponent<DamageReceiver>(out var playerDamageReceiver))
 				{
 					playerDamageReceiver.ReceiveDamage(new DamageInfo(_attacker, _damage));
 
@@ -45,15 +45,15 @@ namespace Damage
 		}
 
 
-		private void OnTriggerStay2D(Collider2D collision)
+		private void OnTriggerStay2D(Collider2D collider)
 		{
 			if (!_canAttack) return;
 
 			if (!_isOnUpdate) return;
 
-			if (collision.gameObject.layer == _targetLayer)
+			if (collider.gameObject.layer == _targetLayer)
 			{
-				if (collision.attachedRigidbody.TryGetComponent<DamageReceiver>(out var playerDamageReceiver))
+				if (collider.attachedRigidbody.TryGetComponent<DamageReceiver>(out var playerDamageReceiver))
 				{
 					playerDamageReceiver.ReceiveDamage(new DamageInfo(_attacker, _damage));
 
