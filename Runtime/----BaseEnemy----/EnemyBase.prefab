@@ -441,7 +441,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _spriteRenderer: {fileID: 4346564251117856682}
-  _blinkTime: 1
+  _blinkTime: 0.2
   _blinkSpeed: 0.1
 --- !u!1 &4399371991519458137
 GameObject:
@@ -888,7 +888,7 @@ MonoBehaviour:
   _baseBehaviourContainers:
   - _behaviorName: Death
     _enemyBehaviour: {fileID: 3338735432889558919}
-  - _behaviorName: Hurt
+  - _behaviorName: HurtEffect
     _enemyBehaviour: {fileID: 9004252157370004968}
   - _behaviorName: Turn
     _enemyBehaviour: {fileID: 4359325066517073593}
