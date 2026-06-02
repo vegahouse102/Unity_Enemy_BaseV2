@@ -1,4 +1,5 @@
 
+using System.Security.Cryptography;
 using UnityEngine;
 
 namespace Damage
@@ -63,6 +64,10 @@ namespace Damage
 					}
 				}
 			}
+		}
+		public void SetDamage(float damage)
+		{
+			_damage = damage;
 		}
 
 		public void SetAttacker(GameObject attacker)

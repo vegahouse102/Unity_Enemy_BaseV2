@@ -13,7 +13,7 @@ namespace Enemy
 		[SerializeField]
 		AnimationEventRelay _animationEventBroadcaster;
 		[SerializeField]
-		[Tooltip("Animation을 실행시킬 trigger이름")]
+		[Tooltip("Animation을 끝낼 trigger이름")]
 		private string _triggerName;
 		[SerializeField]
 		[Tooltip("AnimationEventBroadcaster를 이용해 animator에 이벤트를 붙일때 실행할 이름")]
