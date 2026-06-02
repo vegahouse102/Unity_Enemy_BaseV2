@@ -6,6 +6,11 @@ namespace Damage
 {
 	public class DamageTrigger : MonoBehaviour
 	{
+
+		[Header("데미지 컴포넌트")]
+		[Header("감지하고자 하는 collider의 tag가 Hitbox여야함")]
+
+
 		[SerializeField] private float _damage;
 		[SerializeField] private bool _isOneHitDamage = true;
 		[SerializeField] private string _targetLayerName = "Player";
@@ -29,6 +34,8 @@ namespace Damage
 
 			if (_isOnUpdate) return;
 
+			if (!collider.gameObject.CompareTag("Hitbox")) return;
+
 			if (collider.gameObject.layer == _targetLayer)
 			{
 				if (collider.attachedRigidbody.TryGetComponent<DamageReceiver>(out var playerDamageReceiver))
@@ -50,6 +57,8 @@ namespace Damage
 			if (!_canAttack) return;
 
 			if (!_isOnUpdate) return;
+
+			if (!collider.gameObject.CompareTag("Hitbox")) return;
 
 			if (collider.gameObject.layer == _targetLayer)
 			{
