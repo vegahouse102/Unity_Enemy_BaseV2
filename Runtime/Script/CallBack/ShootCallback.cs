@@ -35,8 +35,8 @@ namespace Enemy
 			Projectile projectileComponent = projectile.GetComponent<Projectile>();
 			DamageTrigger damageTrigger = projectile.GetComponent<DamageTrigger>();
 #if UNITY_EDITOR
-			Debug.Log(projectileComponent != null);
-			Debug.Log(damageTrigger != null);
+			Debug.Assert(projectileComponent != null);
+			Debug.Assert(damageTrigger != null);
 #endif
 			GameObject player = _playerFinder.GetPlayerOrNull();
 			if (player == null)
