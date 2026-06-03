@@ -401,7 +401,7 @@ GameObject:
   - component: {fileID: 4926070804958147615}
   - component: {fileID: 9004252157370004968}
   m_Layer: 7
-  m_Name: HurtBehaviour
+  m_Name: HurtEffectBehaviour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
