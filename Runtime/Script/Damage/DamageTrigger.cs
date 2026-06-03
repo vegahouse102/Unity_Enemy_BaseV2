@@ -1,5 +1,4 @@
 
-using System.Security.Cryptography;
 using UnityEngine;
 
 namespace Damage
@@ -13,18 +12,15 @@ namespace Damage
 
 		[SerializeField] private float _damage;
 		[SerializeField] private bool _isOneHitDamage = true;
-		[SerializeField] private string _targetLayerName = "Player";
+		[SerializeField] private LayerMask _targetLayer;
 		[SerializeField] private bool _isOnUpdate = false;
-
+		[SerializeField] GameObject _attacker;
 		private bool _canAttack = true;
-		private int _targetLayer;
-		private GameObject _attacker;
 
 		private void OnEnable()
 		{
 			_canAttack = true;
 			
-			_targetLayer = LayerMask.NameToLayer(_targetLayerName);
 			_attacker = transform.root.gameObject;
 		}
 
@@ -36,7 +32,7 @@ namespace Damage
 
 			if (!collider.gameObject.CompareTag("Hitbox")) return;
 
-			if (collider.gameObject.layer == _targetLayer)
+			if (IsContainLayer(collider.gameObject.layer, _targetLayer))
 			{
 				if (collider.attachedRigidbody.TryGetComponent<DamageReceiver>(out var playerDamageReceiver))
 				{
@@ -60,7 +56,9 @@ namespace Damage
 
 			if (!collider.gameObject.CompareTag("Hitbox")) return;
 
-			if (collider.gameObject.layer == _targetLayer)
+
+
+			if (IsContainLayer(collider.gameObject.layer, _targetLayer))
 			{
 				if (collider.attachedRigidbody.TryGetComponent<DamageReceiver>(out var playerDamageReceiver))
 				{
@@ -89,6 +87,11 @@ namespace Damage
 		public void ResetTrigger()
 		{
 			_canAttack = true;
+		}
+
+		private bool IsContainLayer(int layer,LayerMask layerMask)
+		{
+			return ((1 << layer) & layerMask) != 0;
 		}
 	}
 }
