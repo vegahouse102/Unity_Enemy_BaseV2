@@ -68,16 +68,16 @@ namespace Enemy.Cleaner
 					_lastShootTime = Time.time;
 					//Debug.Log("Shoot");
 
-					GameObject bullet = Instantiate(_bullet);
+					GameObject bullet = Instantiate(_bullet, _bulletPos.position,Quaternion.identity);
 					bullet.transform.position = _bulletPos.position;
 
-					Projectile projectile = bullet.GetComponent<Projectile>();
+					Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
 					DamageTrigger trigger = bullet.GetComponent<DamageTrigger>();
 					trigger.SetAttacker(_enemyEntity.GetEnemyObject());
 
 					if (player != null)
 					{
-						projectile.SetVelocity(_shootSpeed * (player.transform.position - transform.position).normalized);
+						rigid.linearVelocity = (_shootSpeed * (player.transform.position - transform.position).normalized);
 					}
 					else
 					{

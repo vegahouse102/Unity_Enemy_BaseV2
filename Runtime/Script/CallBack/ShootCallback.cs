@@ -32,10 +32,12 @@ namespace Enemy
 		{
 			GameObject projectile = Instantiate(_projectile);
 			projectile.transform.position = _shootPos.position;
-			Projectile projectileComponent = projectile.GetComponent<Projectile>();
+
+			Rigidbody2D rigid = projectile.GetComponent <Rigidbody2D>();
 			DamageTrigger damageTrigger = projectile.GetComponent<DamageTrigger>();
 #if UNITY_EDITOR
-			Debug.Assert(projectileComponent != null);
+
+			Debug.Assert(rigid != null);
 			Debug.Assert(damageTrigger != null);
 #endif
 			GameObject player = _playerFinder.GetPlayerOrNull();
@@ -45,7 +47,7 @@ namespace Enemy
 			velocity = velocity.normalized;
 			velocity *= _speed;
 
-			projectileComponent.SetVelocity(velocity);
+			rigid.linearVelocity = (velocity);
 
 			damageTrigger.SetAttacker(_enemyEntity.GetEnemyObject());
 			damageTrigger.SetDamage(_damage);
