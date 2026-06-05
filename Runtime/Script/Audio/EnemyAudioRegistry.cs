@@ -5,6 +5,10 @@ namespace Enemy.Audio
 {
 	public class EnemyAudioRegistry : MonoBehaviour
 	{
+
+		[SerializeField]
+		EnemyAudioRelay _audioRelay;
+
 		[Header("AudioSource ¸ñ·Ï")]
 		[SerializeField]
 		private List<AudioSourceContainer> _audioSourceContainers = new List<AudioSourceContainer>();
@@ -15,6 +19,16 @@ namespace Enemy.Audio
 		{
 
 			InitializeAudioCache();
+			_audioRelay.OnPlaySound += PlaySound;
+			_audioRelay.OnStopSound += StopSound;
+			_audioRelay.OnAllStopSounds += StopAllSounds;
+		}
+
+		private void OnDestroy()
+		{
+			_audioRelay.OnPlaySound -= PlaySound;
+			_audioRelay.OnStopSound -= StopSound;
+			_audioRelay.OnAllStopSounds -= StopAllSounds;
 		}
 
 		private void InitializeAudioCache()
@@ -39,19 +53,19 @@ namespace Enemy.Audio
 			}
 		}
 
-		public void PlaySound(string name)
+		private void PlaySound(string name)
 		{
 			
-			if (_audioCache.TryGetValue(name, out AudioSourceContainer sourceContaincer))
+			if (_audioCache.TryGetValue(name, out AudioSourceContainer sourceContainer))
 			{
 
-				if(sourceContaincer.IsOneShotAudio)
+				if(sourceContainer.IsOneShotAudio)
 				{
-					sourceContaincer.AudioSource.PlayOneShot(sourceContaincer.AudioSource.clip);
+					sourceContainer.AudioSource.PlayOneShot(sourceContainer.AudioSource.clip);
 				}
 				else
 				{
-					sourceContaincer.AudioSource.Play();
+					sourceContainer.AudioSource.Play();
 				}
 			}
 			else
@@ -62,7 +76,7 @@ namespace Enemy.Audio
 			}
 		}
 
-		public void StopSound(string name)
+		private void StopSound(string name)
 		{
 			if (_audioCache.TryGetValue(name, out AudioSourceContainer sourceContainer))
 			{
@@ -75,7 +89,7 @@ namespace Enemy.Audio
 #endif
 			}
 		}
-		public void StopAllSounds()
+		private void StopAllSounds()
 		{
 			foreach(var source in _audioSourceContainers)
 			{

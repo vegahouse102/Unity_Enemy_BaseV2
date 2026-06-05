@@ -11,7 +11,7 @@ namespace Enemy
 		[SerializeField]
 		Animator _animator;
 		[SerializeField]
-		AnimationEventRelay _animationEventBroadcaster;
+		EnemyEventRelay _animationEventBroadcaster;
 
 		[Tooltip("animation트리거타입 Trigger or Bool")]
 		[SerializeField]

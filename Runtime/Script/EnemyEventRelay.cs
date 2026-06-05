@@ -7,7 +7,7 @@ namespace Enemy
 	/// animator에 사용될 event를 다루는 컴포넌트
 	/// </summary>
 	//animator에 사용될 event
-	public class AnimationEventRelay : MonoBehaviour
+	public class EnemyEventRelay : MonoBehaviour
 	{
 
 		public event Action<string> OnTriggerEvent;

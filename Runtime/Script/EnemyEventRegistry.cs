@@ -10,7 +10,7 @@ namespace Enemy
 	public class EnemyEventRegistry : MonoBehaviour
 	{
 		[SerializeField]
-		private AnimationEventRelay _animationEventRelay;
+		private EnemyEventRelay _animationEventRelay;
 
 		[SerializeField]
 		private List<EventContainer> _eventContainers = new();
@@ -34,7 +34,7 @@ namespace Enemy
 		}
 		
 
-		public void ExecuteEvent(string eventName)
+		private void ExecuteEvent(string eventName)
 		{
 			if (_eventCache.TryGetValue(eventName, out UnityEvent<string> unityEvent))
 			{

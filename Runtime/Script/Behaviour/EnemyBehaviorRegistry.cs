@@ -33,6 +33,10 @@ namespace Enemy
 
 				return;
 			}
+			if (_behaviours.ContainsKey(behaviour.BehaviourName))
+			{
+				Debug.Log($"Duplicate name found.");
+			}
 			_behaviours[behaviour.BehaviourName] = behaviour.EnemyBehaviour;
 		}
 
