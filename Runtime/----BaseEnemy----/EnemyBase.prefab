@@ -161,7 +161,7 @@ MonoBehaviour:
       m_Calls: []
   _rigid: {fileID: 4982436358754516707}
   _directionHandler: {fileID: 5189492288530131770}
-  _animator: {fileID: 0}
+  _animator: {fileID: 5894705013865713789}
   _sensorContext: {fileID: 6940280806520128720}
   _moveBoolAnimationName: Walk
   _isFrontMove: 1
