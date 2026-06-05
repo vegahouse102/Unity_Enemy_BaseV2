@@ -6,6 +6,9 @@ namespace Enemy
 	public class EnemyBehaviorRegistry : MonoBehaviour
 	{
 		[SerializeField]
+		EnemyBehaviourRelay _behaviourRelay;
+
+		[SerializeField]
 		private List<BehaviourContainer> _baseBehaviourContainers = new();
 
 		[SerializeField]
@@ -22,6 +25,12 @@ namespace Enemy
 			{
 				AddOrOverride(behaviour);
 			}
+			_behaviourRelay.OnRequestBehaviour += GetBehaviourOrNull;
+		}
+
+		private void OnDestroy()
+		{
+			_behaviourRelay.OnRequestBehaviour -= GetBehaviourOrNull;
 		}
 
 		private void AddOrOverride(BehaviourContainer behaviour)
@@ -40,7 +49,7 @@ namespace Enemy
 			_behaviours[behaviour.BehaviourName] = behaviour.EnemyBehaviour;
 		}
 
-		public EnemyBehaviour GetBehaviourOrNull(string name)
+		private EnemyBehaviour GetBehaviourOrNull(string name)
 		{
 			if (_behaviours.TryGetValue(name, out var behaviour))
 			{

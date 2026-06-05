@@ -12,12 +12,12 @@ public partial class ExecuteBehaviorAction : Action
 	[SerializeReference] public BlackboardVariable<GameObject> Self;
 	[SerializeReference] public BlackboardVariable<string> Name;
 
-	EnemyBehaviorRegistry _registry;
+	EnemyBehaviourRelay _registry;
 	EnemyBehaviour _behavior;
 	protected override Status OnStart()
 	{
 		if (_registry == null)
-			_registry = Self.Value.gameObject.GetComponent<EnemyBehaviorRegistry>();
+			_registry = Self.Value.gameObject.GetComponent<EnemyBehaviourRelay>();
 		if (_registry == null)
 			return Status.Failure;
 		_behavior = _registry.GetBehaviourOrNull(Name);

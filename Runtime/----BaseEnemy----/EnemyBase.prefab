@@ -83,8 +83,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3424924038492350565}
+  - component: {fileID: 8909771869820537855}
   m_Layer: 0
-  m_Name: Behaviour
+  m_Name: BehaviourRegistry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -109,6 +110,29 @@ Transform:
   - {fileID: 6886754042457433488}
   m_Father: {fileID: 8213077051957223580}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8909771869820537855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197552841963146681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9462776303490f48a6c05b5620080d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Enemy::Enemy.EnemyBehaviorRegistry
+  _behaviourRelay: {fileID: 1786758921442398474}
+  _baseBehaviourContainers:
+  - _behaviorName: Death
+    _enemyBehaviour: {fileID: 3338735432889558919}
+  - _behaviorName: HurtEffect
+    _enemyBehaviour: {fileID: 9004252157370004968}
+  - _behaviorName: Turn
+    _enemyBehaviour: {fileID: 4359325066517073593}
+  - _behaviorName: Walk
+    _enemyBehaviour: {fileID: 1374012193789000184}
+  _childBehaviourContainers: []
 --- !u!1 &1291165756424167354
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,8 +464,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6606583824647971459}
+  - component: {fileID: 372146721587551372}
   m_Layer: 0
-  m_Name: AudioSources
+  m_Name: AudioRegistry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -462,6 +487,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8213077051957223580}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &372146721587551372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4999054690377834924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a2eb7a4c9084342b11f59a26c24a01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Enemy::Enemy.Audio.EnemyAudioRegistry
+  _audioRelay: {fileID: 2249198587689079586}
+  _audioSourceContainers: []
 --- !u!1 &5706330855078601560
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,12 +571,10 @@ GameObject:
   - component: {fileID: -7358156219938456539}
   - component: {fileID: 2249198587689079586}
   - component: {fileID: 5659437174526807608}
+  - component: {fileID: 1786758921442398474}
   - component: {fileID: 5802215905982552733}
   - component: {fileID: 5894705013865713789}
   - component: {fileID: 3986975127570327137}
-  - component: {fileID: 2345009442882368742}
-  - component: {fileID: 3736210769907878032}
-  - component: {fileID: 2000014673075169193}
   - component: {fileID: 679012634464110374}
   m_Layer: 0
   m_Name: EnemyBase
@@ -564,6 +601,7 @@ Transform:
   - {fileID: 6480943682163611294}
   - {fileID: 3424924038492350565}
   - {fileID: 6606583824647971459}
+  - {fileID: 8809083242265767090}
   - {fileID: 5663236642047781709}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -725,6 +763,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36dd43ab96f790f45ae3e15d97b4bde5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Enemy::Enemy.AnimationEventRelay
+--- !u!114 &1786758921442398474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6858735844435078928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b062fd2861fdff43b0d688da3d906c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Enemy::Enemy.EnemyBehaviourRelay
 --- !u!114 &5802215905982552733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -853,56 +903,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
---- !u!114 &2345009442882368742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6858735844435078928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9462776303490f48a6c05b5620080d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Enemy::Enemy.EnemyBehaviorRegistry
-  _baseBehaviourContainers:
-  - _behaviorName: Death
-    _enemyBehaviour: {fileID: 3338735432889558919}
-  - _behaviorName: HurtEffect
-    _enemyBehaviour: {fileID: 9004252157370004968}
-  - _behaviorName: Turn
-    _enemyBehaviour: {fileID: 4359325066517073593}
-  - _behaviorName: Walk
-    _enemyBehaviour: {fileID: 1374012193789000184}
-  _childBehaviourContainers: []
---- !u!114 &3736210769907878032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6858735844435078928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a2eb7a4c9084342b11f59a26c24a01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Enemy::Enemy.Audio.EnemyAudioRegistry
-  _audioRelay: {fileID: 2249198587689079586}
-  _audioSourceContainers: []
---- !u!114 &2000014673075169193
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6858735844435078928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70096d24c7c7d0c4a895c7a5023d6c78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Enemy::Enemy.EnemyEventRegistry
-  _animationEventRelay: {fileID: 5659437174526807608}
-  _eventContainers: []
 --- !u!114 &679012634464110374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1018,3 +1018,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98b4b09c49ef1448888cf2a75b56162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Enemy::Enemy.PlayerFinder
+--- !u!1 &9095064274549789324
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8809083242265767090}
+  - component: {fileID: 5487432832488861791}
+  m_Layer: 0
+  m_Name: EventRegistry
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8809083242265767090
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9095064274549789324}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8213077051957223580}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5487432832488861791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9095064274549789324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70096d24c7c7d0c4a895c7a5023d6c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Enemy::Enemy.EnemyEventRegistry
+  _animationEventRelay: {fileID: 5659437174526807608}
+  _eventContainers: []
