@@ -670,6 +670,7 @@ GameObject:
   - component: {fileID: 5736935370284663797}
   - component: {fileID: 5189492288530131770}
   - component: {fileID: 5656348602568742692}
+  - component: {fileID: -7358156219938456539}
   - component: {fileID: 5802215905982552733}
   - component: {fileID: 2345009442882368742}
   - component: {fileID: 3736210769907878032}
@@ -826,6 +827,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Enemy::Enemy.EnemyDamageRelay
   _agent: {fileID: 5802215905982552733}
+--- !u!114 &-7358156219938456539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6858735844435078928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2641bbcb741a5945a34f33c9be3af51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Enemy::Enemy.RandomZPositionOffset
 --- !u!114 &5802215905982552733
 MonoBehaviour:
   m_ObjectHideFlags: 0
