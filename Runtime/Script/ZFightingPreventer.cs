@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Enemy
 {
-	public class RandomZPositionOffset : MonoBehaviour
+	public class ZFightingPreventer : MonoBehaviour
 	{
 		private void Awake()
 		{
