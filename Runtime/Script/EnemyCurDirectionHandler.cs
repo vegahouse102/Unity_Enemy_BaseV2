@@ -1,5 +1,6 @@
 using Unity.Behavior;
 using UnityEngine;
+using System;
 
 namespace Enemy
 {
@@ -11,6 +12,9 @@ namespace Enemy
 		EnemyEntity _enemyEntity;
 
 		private BlackboardVariable<bool> _isFrontLeft;
+
+
+		public event System.Action OnTurn;
 		private void Start()
 		{
 			_agent.GetVariable<bool>("IsFrontLeft", out _isFrontLeft);
@@ -30,9 +34,10 @@ namespace Enemy
 		public void Turn()
 		{
 			if (_isFrontLeft == null) return;
-
+			
 			_isFrontLeft.Value = !_isFrontLeft.Value;
 			_enemyEntity.transform.Rotate(Vector3.up, 180);
+			OnTurn?.Invoke();
 		}
 	}
 }
