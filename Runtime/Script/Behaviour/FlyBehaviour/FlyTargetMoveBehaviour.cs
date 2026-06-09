@@ -37,7 +37,7 @@ namespace Enemy
 
 		protected override Node.Status OnStartProcess()
 		{
-
+			InitializeTarget();
 			_cachedTargetPosition = GetTargetPosition();
 
 			if (_cachedTargetPosition == Vector3.positiveInfinity)
@@ -101,6 +101,13 @@ namespace Enemy
 		/// </summary>
 		protected abstract Vector3 GetTargetPosition();
 
+		/// <summary>
+		/// 행동이 시작될시 target을 initialize하는 메서드
+		/// </summary>
+		protected virtual void InitializeTarget()
+		{
+
+		}
 		private void FixedUpdate()
 		{
 			if (!_isActiveNode)
