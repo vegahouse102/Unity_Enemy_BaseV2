@@ -1,50 +1,30 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using Unity.Behavior;
 using Sensor;
+
 namespace Enemy
 {
 	public abstract class FlyTargetMoveBehaviour : EnemyBehaviour
 	{
-		[Header("°øÁß¿òÁ÷ÀÓ")]
+		[Header("ê³µì¤‘ì›€ì§ì„")]
+		[SerializeField] private Rigidbody2D _rigid;
+		[SerializeField] private EnemyCurDirectionHandler _directionHandler;
+		[SerializeField] private Animator _animator;
+		[SerializeField] private SensorContext _sensorContext;
 
-
-		[SerializeField]
-		private Rigidbody2D _rigid;
-		[SerializeField]
-		private EnemyCurDirectionHandler _directionHandler;
-		[SerializeField]
-		private Animator _animator;
-		[SerializeField]
-		private SensorContext _sensorContext;
-
-
-		[SerializeField]
-		private string _moveBoolAnimationName;
-
-		[SerializeField]
-		private bool _isFrontMove = true;
-
-		[SerializeField, Min(0.01f)]
-		private float _startVelocity;
-
-
-		[SerializeField, Min(0)]
-		private float _maxVelocity;
-
-		[SerializeField, Min(0.001f)]
-		private float _acceleration;
-
-		[SerializeField, Range(0f, 1f)]
-		private float _steeringSensitivity;
-
-		[SerializeField, Min(0.001f)]
-		private float _closeDistanceThreshold = 0.01f;
-
+		[SerializeField] private string _moveBoolAnimationName;
+		[SerializeField] private bool _isFrontMove = true;
+		[SerializeField, Min(0.01f)] private float _startVelocity;
+		[SerializeField, Min(0)] private float _maxVelocity;
+		[SerializeField, Min(0.001f)] private float _acceleration;
+		[SerializeField, Range(0f, 1f)] private float _steeringSensitivity;
+		[SerializeField, Min(0.001f)] private float _closeDistanceThreshold = 0.01f;
 
 		private bool _isActiveNode;
 
+		// ğŸ’¥ FixedUpdateì™€ OnUpdateProcessê°€ ë™ì¼í•œ í”„ë ˆì„ì˜ ìµœì‹  ì¢Œí‘œë¥¼ ê³µìœ í•˜ë„ë¡ í•„ë“œë¡œ ê´€ë¦¬í•©ë‹ˆë‹¤.
+		private Vector3 _cachedTargetPosition;
 
-		private Transform _targetTransform;
 		private void Awake()
 		{
 #if UNITY_EDITOR
@@ -52,45 +32,55 @@ namespace Enemy
 			Debug.Assert(_rigid != null);
 			Debug.Assert(_animator != null);
 			Debug.Assert(_sensorContext != null);
-
 #endif
-
 		}
 
 		protected override Node.Status OnStartProcess()
 		{
-			_targetTransform = GetTargetTransform();
-			if (_targetTransform == null)
+
+			_cachedTargetPosition = GetTargetPosition();
+
+			if (_cachedTargetPosition == Vector3.positiveInfinity)
 			{
-				Debug.Log("target object is null");
 				return Node.Status.Failure;
 			}
 
 			_animator.SetBool(_moveBoolAnimationName, true);
 			_isActiveNode = true;
-			_rigid.linearVelocity = (_targetTransform.position-transform.position).normalized*_startVelocity;
+
+			// ìºì‹±ëœ ì•ˆì „í•œ ì¢Œí‘œë¡œ ì´ˆê¸° ì†ë„ ì£¼ì…
+			_rigid.linearVelocity = (_cachedTargetPosition - transform.position).normalized * _startVelocity;
 			return Node.Status.Running;
 		}
 
 		protected override Node.Status OnUpdateProcess()
 		{
+		
+			_cachedTargetPosition = GetTargetPosition();
 
-			if (Vector2.Distance(transform.position, _targetTransform.position) < _closeDistanceThreshold)
+			
+			if (_cachedTargetPosition == Vector3.positiveInfinity)
+			{
+				return Node.Status.Failure;
+			}
+
+			// ì´ì œ ì•ˆì „í•´ì§„ ì¢Œí‘œë¡œ ê±°ë¦¬ ê³„ì‚°
+			if (Vector2.Distance(transform.position, _cachedTargetPosition) < _closeDistanceThreshold)
 			{
 				return Node.Status.Success;
 			}
 
+			// íšŒì „(Turn) ë¡œì§
+			float targetDirX = (_cachedTargetPosition.x - transform.position.x);
+			int currentFacingX = _directionHandler.GetXDirection();
+			float distanceX = Mathf.Abs(targetDirX);
 
-			//float targetDirX = _rigid.linearVelocityX;
-			float targetDirX = (_targetTransform.position.x - transform.position.x);
-			int currentFacingX = _directionHandler.GetXDirection(); // ¿À¸¥ÂÊÀÌ¸é 1, ¿ŞÂÊÀÌ¸é -1 °¡Á¤
-			float distanceX = Mathf.Abs(_targetTransform.position.x - transform.position.x);
-			// ¸ñÀûÁö°¡ ¿À¸¥ÂÊ¿¡ ÀÖ´Â°¡? ÇöÀç ¿À¸¥ÂÊÀ» º¸°í ÀÖ´Â°¡?
 			bool targetIsRight = targetDirX > 0;
 			bool facingIsRight = currentFacingX > 0;
 
 			bool shouldTurn = _isFrontMove ? (targetIsRight != facingIsRight) : (targetIsRight == facingIsRight);
 			shouldTurn = shouldTurn && distanceX > _closeDistanceThreshold;
+
 			if (shouldTurn)
 			{
 				_directionHandler.Turn();
@@ -106,30 +96,28 @@ namespace Enemy
 			_isActiveNode = false;
 		}
 
-		protected abstract Transform GetTargetTransform();
+		/// <summary>
+		/// ì¶”ì í•  ëŒ€ìƒì˜ ì‹¤ì‹œê°„ ìœ„ì¹˜ë¥¼ ë¦¬í„´. ëŒ€ìƒì´ ì—†ìœ¼ë©´ Vector3.positiveInfinity ë¦¬í„´í•  ê²ƒ.
+		/// </summary>
+		protected abstract Vector3 GetTargetPosition();
 
 		private void FixedUpdate()
 		{
-			
 			if (!_isActiveNode)
 				return;
 
-			
-			Vector2 targetDirection = ((Vector2)_targetTransform.position - (Vector2)transform.position).normalized;
 
-		
+			Vector2 targetDirection = ((Vector2)_cachedTargetPosition - (Vector2)transform.position).normalized;
+
+
 			_rigid.linearVelocity += targetDirection * _acceleration * Time.fixedDeltaTime;
-
 			_rigid.linearVelocity = Vector2.Lerp(_rigid.linearVelocity, targetDirection * _rigid.linearVelocity.magnitude, _steeringSensitivity);
 
+		
 			if (_rigid.linearVelocity.sqrMagnitude > _maxVelocity * _maxVelocity)
 			{
-
 				_rigid.linearVelocity = _rigid.linearVelocity.normalized * _maxVelocity;
 			}
 		}
-
-
-
 	}
 }
