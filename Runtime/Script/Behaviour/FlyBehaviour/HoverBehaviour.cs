@@ -1,4 +1,4 @@
-using Sensor;
+ï»¿using Sensor;
 using Unity.Behavior;
 using UnityEngine;
 using Enemy.Utils;
@@ -6,7 +6,7 @@ namespace Enemy
 {
 	public class HoverBehaviour : EnemyBehaviour
 	{
-		[Header("°øÁß hover ¿òÁ÷ÀÓ")]
+		[Header("ê³µì¤‘ hover ì›€ì§ì„")]
 
 
 		[SerializeField]
@@ -19,7 +19,7 @@ namespace Enemy
 		private SensorContext _sensorContext;
 
 		[Space(30)]
-		[Header("¾ŞÄ¿·ÎºÎÅÍ radius¾ÈÀ» ¹èÈ¸ÇÔ, ¹ÛÀ¸·Î ³ª°¡¸é ¾ÈÀ¸·Î µ¹¾Æ¿Â´Ù")]
+		[Header("ì•µì»¤ë¡œë¶€í„° radiusì•ˆì„ ë°°íšŒí•¨, ë°–ìœ¼ë¡œ ë‚˜ê°€ë©´ ì•ˆìœ¼ë¡œ ëŒì•„ì˜¨ë‹¤")]
 		[SerializeField]
 		private Transform _anchorPointTransform;
 		[SerializeField]
@@ -45,8 +45,8 @@ namespace Enemy
 
 		[SerializeField,Min(0.001f)]
 		private float _acceleration;
-		[SerializeField, Min(0.001f)]
-		private float _closeDistanceThreshold = 0.1f;
+		[SerializeField, Min(0.1f)]
+		private float _closeDistanceThreshold = 0.01f;
 
 		private Vector3 _anchorPosition;
 
@@ -83,27 +83,32 @@ namespace Enemy
 
 		protected override Node.Status OnUpdateProcess()
 		{
-			float directionDot = _rigid.linearVelocityX * _directionHandler.GetXDirection();
+	
+			if (Vector2.Distance(transform.position, _pos2) < _closeDistanceThreshold)
+			{
+				_pos1 = _pos2;
+				_pos2 = (_pos2 == _endPos1) ? _endPos2 : _endPos1;
+			}
 
-			bool shouldTurn = _isFrontMove ? directionDot < 0 : directionDot > 0;
+			
 
 			Accel(_pos1, _pos2, transform.position);
 
+
+			float targetDirX = _pos2.x - transform.position.x;
+			int currentFacingX = _directionHandler.GetXDirection(); // ì˜¤ë¥¸ìª½ì´ë©´ 1, ì™¼ìª½ì´ë©´ -1 ê°€ì •
+
+			// ëª©ì ì§€ê°€ ì˜¤ë¥¸ìª½ì— ìˆëŠ”ê°€? í˜„ì¬ ì˜¤ë¥¸ìª½ì„ ë³´ê³  ìˆëŠ”ê°€?
+			bool targetIsRight = targetDirX > 0;
+			bool facingIsRight = currentFacingX > 0;
+
+			bool shouldTurn = _isFrontMove ? (targetIsRight != facingIsRight) : (targetIsRight == facingIsRight);
 
 			if (shouldTurn)
 			{
 				_directionHandler.Turn();
 			}
 
-			if(Vector2.Distance(_endPos1, (Vector2)transform.position)< _closeDistanceThreshold)
-			{
-				_pos1 = _endPos1;
-				_pos2 = _endPos2;
-			}else if (Vector2.Distance(_endPos2, (Vector2)transform.position)< _closeDistanceThreshold)
-			{
-				_pos1 = _endPos2;
-				_pos2 = _endPos1;
-			}
 			return Node.Status.Running;
 		}
 
@@ -114,21 +119,32 @@ namespace Enemy
 		}
 
 
-		private void Accel(Vector2 pos1,Vector2 pos2,Vector2 cur)
+		private void Accel(Vector2 pos1, Vector2 pos2, Vector2 cur)
 		{
-			_rigid.linearVelocity = EnemyMath.GetAdvancedTrapezoidalVelocity(
-				Vector2.Distance(pos1, pos2),
-				Vector2.Distance(pos1, cur),
+			float totalDistance = Vector2.Distance(pos1, pos2);
+			float currentMoved = Vector2.Distance(pos1, cur);
+
+			
+			currentMoved = Mathf.Min(currentMoved, totalDistance);
+
+			float calculatedSpeed = EnemyMath.GetAdvancedTrapezoidalVelocity(
+				totalDistance,
+				currentMoved,
 				_maxVelocity,
 				_acceleration,
 				_startVelocity,
 				_endVelocity
-				)*(pos2-cur);
-		}
+			);
+			//ìµœì†Œì†ë„ 0.1f;
+			float finalSpeed = Mathf.Max(0.1f, calculatedSpeed);
 
+			_rigid.linearVelocity = finalSpeed * (pos2 - cur).normalized;
+		}
 
 	}
 
+
+	
 }
 
 
