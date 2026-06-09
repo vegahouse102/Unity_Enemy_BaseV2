@@ -45,14 +45,13 @@ namespace Enemy
 
 		[SerializeField,Min(0.001f)]
 		private float _acceleration;
-		[SerializeField, Min(0.1f)]
+		[SerializeField, Min(0.001f)]
 		private float _closeDistanceThreshold = 0.01f;
 
 		private Vector3 _anchorPosition;
 
 		private Vector2 _pos1, _pos2;
 		private Vector2 _endPos1, _endPos2;
-		private Vector2 _curDir;
 		private void Awake()
 		{
 #if UNITY_EDITOR
@@ -63,18 +62,17 @@ namespace Enemy
 			Debug.Assert(_anchorPointTransform != null);
 #endif
 			_anchorPosition = _anchorPointTransform.position;
+			_endPos1 = (Vector2)_anchorPosition + Vector2.right * _radius;
+			_endPos2 = (Vector2)_anchorPosition - Vector2.right * _radius;
 		}
 
 		protected override Node.Status OnStartProcess()
 		{
 
 			_animator.SetBool(_moveBoolAnimationName, true);
-			_curDir = Vector2.right * _directionHandler.GetXDirection();
-			if (!_isFrontMove)
-				_curDir.x *= -1;
 
-			_endPos1 = (Vector2)_anchorPosition + Vector2.right * _radius;
-			_endPos2 = (Vector2)_anchorPosition - Vector2.right * _radius;
+
+			
 
 			_pos1 = transform.position;
 			_pos2 = _endPos2;
@@ -83,7 +81,10 @@ namespace Enemy
 
 		protected override Node.Status OnUpdateProcess()
 		{
-	
+#if UNITY_EDITOR
+			Debug.DrawLine(_pos1,_pos2,Color.red);
+			Debug.DrawLine(_endPos1, _endPos2, Color.blue);
+#endif
 			if (Vector2.Distance(transform.position, _pos2) < _closeDistanceThreshold)
 			{
 				_pos1 = _pos2;
@@ -101,14 +102,14 @@ namespace Enemy
 			// 목적지가 오른쪽에 있는가? 현재 오른쪽을 보고 있는가?
 			bool targetIsRight = targetDirX > 0;
 			bool facingIsRight = currentFacingX > 0;
-
+		
 			bool shouldTurn = _isFrontMove ? (targetIsRight != facingIsRight) : (targetIsRight == facingIsRight);
-
+			
 			if (shouldTurn)
 			{
 				_directionHandler.Turn();
 			}
-
+			//Debug.Log(shouldTurn);
 			return Node.Status.Running;
 		}
 
@@ -121,12 +122,22 @@ namespace Enemy
 
 		private void Accel(Vector2 pos1, Vector2 pos2, Vector2 cur)
 		{
-			float totalDistance = Vector2.Distance(pos1, pos2);
-			float currentMoved = Vector2.Distance(pos1, cur);
+			// 1. 총 가야 할 벡터와 거리 구하기
+			Vector2 totalVector = pos2 - pos1;
+			float totalDistance = totalVector.magnitude;
 
-			
-			currentMoved = Mathf.Min(currentMoved, totalDistance);
+			// 만약 목적지와 출발지가 완전히 똑같다면 연산 패스
+			if (totalDistance < 0.001f) return;
 
+			// 2. 💥 [기적의 수정] 벡터 투영을 이용한 '진짜 전진 거리' 계산!
+			// 몬스터가 옆으로 빗나가거나 뒤로 밀려도, '고속도로 진행 방향' 기준의 정밀한 위치를 찾아냅니다.
+			Vector2 currentVector = cur - pos1;
+			float currentMoved = Vector2.Dot(currentVector, totalVector.normalized);
+
+			// 💥 [안전장치] 전진 거리가 0보다 작아지거나(뒤로 밀림), 총 거리를 넘어서면(오버슈트) 딱 잘라줍니다.
+			currentMoved = Mathf.Clamp(currentMoved, 0f, totalDistance);
+
+			// 3. 이제 안전해진 데이터로 사다리꼴 속도 계산
 			float calculatedSpeed = EnemyMath.GetAdvancedTrapezoidalVelocity(
 				totalDistance,
 				currentMoved,
@@ -135,16 +146,14 @@ namespace Enemy
 				_startVelocity,
 				_endVelocity
 			);
-			//최소속도 0.1f;
-			float finalSpeed = Mathf.Max(0.1f, calculatedSpeed);
 
-			_rigid.linearVelocity = finalSpeed * (pos2 - cur).normalized;
+			//float finalSpeed = Mathf.Max(0.1f, calculatedSpeed);
+
+			_rigid.linearVelocity = calculatedSpeed * totalVector.normalized;
 		}
 
 	}
 
-
-	
 }
 
 
