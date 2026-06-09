@@ -1,6 +1,7 @@
 using Sensor;
 using Unity.Behavior;
 using UnityEngine;
+using Enemy.Utils;
 namespace Enemy
 {
 	public class HoverBehaviour : EnemyBehaviour
@@ -34,13 +35,18 @@ namespace Enemy
 		[SerializeField]
 		private bool _isFrontMove = true;
 
+		[SerializeField, Min(0.01f)]
+		private float _startVelocity;
+		[SerializeField, Min(0)]
+		private float _endVelocity;
 
 		[SerializeField, Min(0)]
 		private float _maxVelocity;
 
 		[SerializeField,Min(0.001f)]
 		private float _acceleration;
-
+		[SerializeField, Min(0.001f)]
+		private float _closeDistanceThreshold = 0.1f;
 
 		private Vector3 _anchorPosition;
 
@@ -89,11 +95,11 @@ namespace Enemy
 				_directionHandler.Turn();
 			}
 
-			if(Vector2.Distance(_endPos1, (Vector2)transform.position)< 0.1f)
+			if(Vector2.Distance(_endPos1, (Vector2)transform.position)< _closeDistanceThreshold)
 			{
 				_pos1 = _endPos1;
 				_pos2 = _endPos2;
-			}else if (Vector2.Distance(_endPos2, (Vector2)transform.position)<0.1f)
+			}else if (Vector2.Distance(_endPos2, (Vector2)transform.position)< _closeDistanceThreshold)
 			{
 				_pos1 = _endPos2;
 				_pos2 = _endPos1;
@@ -110,49 +116,21 @@ namespace Enemy
 
 		private void Accel(Vector2 pos1,Vector2 pos2,Vector2 cur)
 		{
-			_rigid.linearVelocity = GetVelocity(Vector2.Distance(pos1,pos2), Vector2.Distance(cur, pos1)) * (pos2-cur).normalized;
+			_rigid.linearVelocity = EnemyMath.GetAdvancedTrapezoidalVelocity(
+				Vector2.Distance(pos1, pos2),
+				Vector2.Distance(pos1, cur),
+				_maxVelocity,
+				_acceleration,
+				_startVelocity,
+				_endVelocity
+				)*(pos2-cur);
 		}
 
-		//사다리꼴 등가속도 운동
-		private float GetVelocity(float distance, float curMoveDistance)
-		{
-			
-			float maxVelocityDistance = _maxVelocity / _acceleration;
 
-			
-			float minVelocity = 0.1f;
-
-			
-			if (2 * maxVelocityDistance > distance)
-			{
-				float halfDistance = distance / 2f;
-				if (curMoveDistance < halfDistance)
-				{
-					
-					return Mathf.Max(minVelocity, _acceleration * curMoveDistance);
-				}
-				
-				return Mathf.Max(minVelocity, -_acceleration * curMoveDistance + _acceleration * distance);
-			}
-
-			
-			else
-			{
-				
-				if (curMoveDistance < maxVelocityDistance)
-				{
-					return Mathf.Max(minVelocity, _acceleration * curMoveDistance);
-				}
-			
-				else if (curMoveDistance < distance - maxVelocityDistance)
-				{
-					return _maxVelocity;
-				}
-				
-				return Mathf.Max(minVelocity, -_acceleration * curMoveDistance + _maxVelocity + _acceleration * (distance - maxVelocityDistance));
-			}
-		}
 	}
 
 }
+
+
+
 
