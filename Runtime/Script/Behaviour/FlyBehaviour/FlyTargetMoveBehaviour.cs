@@ -1,10 +1,9 @@
 using UnityEngine;
 using Unity.Behavior;
 using Sensor;
-using Enemy.Utils;
 namespace Enemy
 {
-	public class FlyTargetMoveBehaviour : EnemyBehaviour
+	public abstract class FlyTargetMoveBehaviour : EnemyBehaviour
 	{
 		[Header("공중움직임")]
 
@@ -17,13 +16,6 @@ namespace Enemy
 		private Animator _animator;
 		[SerializeField]
 		private SensorContext _sensorContext;
-
-
-
-
-		[Space(30)]
-		[SerializeField]
-		private Transform _targetTransform;
 
 
 		[SerializeField]
@@ -50,6 +42,9 @@ namespace Enemy
 
 
 		private bool _isActiveNode;
+
+
+		private Transform _targetTransform;
 		private void Awake()
 		{
 #if UNITY_EDITOR
@@ -64,6 +59,12 @@ namespace Enemy
 
 		protected override Node.Status OnStartProcess()
 		{
+			_targetTransform = GetTargetTransform();
+			if (_targetTransform == null)
+			{
+				Debug.Log("target object is null");
+				return Node.Status.Failure;
+			}
 
 			_animator.SetBool(_moveBoolAnimationName, true);
 			_isActiveNode = true;
@@ -105,6 +106,7 @@ namespace Enemy
 			_isActiveNode = false;
 		}
 
+		protected abstract Transform GetTargetTransform();
 
 		private void FixedUpdate()
 		{
@@ -126,6 +128,8 @@ namespace Enemy
 				_rigid.linearVelocity = _rigid.linearVelocity.normalized * _maxVelocity;
 			}
 		}
+
+
 
 	}
 }
