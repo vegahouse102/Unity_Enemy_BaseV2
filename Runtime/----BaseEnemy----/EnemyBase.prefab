@@ -185,7 +185,7 @@ MonoBehaviour:
       m_Calls: []
   _rigid: {fileID: 4982436358754516707}
   _directionHandler: {fileID: 5189492288530131770}
-  _animator: {fileID: 9155338092208393769}
+  _animator: {fileID: 6465492863446732859}
   _sensorContext: {fileID: 6940280806520128720}
   _moveBoolAnimationName: Walk
   _isFrontMove: 1
@@ -376,7 +376,7 @@ MonoBehaviour:
   OnEndEvent:
     m_PersistentCalls:
       m_Calls: []
-  _animator: {fileID: 9155338092208393769}
+  _animator: {fileID: 6465492863446732859}
 --- !u!1 &4783838225573888171
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,7 +499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19a2eb7a4c9084342b11f59a26c24a01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Enemy::Enemy.Audio.EnemyAudioRegistry
-  _audioRelay: {fileID: 1988551965015887467}
+  _audioRelay: {fileID: 5450410834384359611}
   _audioSourceContainers: []
 --- !u!1 &5109427712026722676
 GameObject:
@@ -510,12 +510,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4871953279370843311}
-  - component: {fileID: 9155338092208393769}
   - component: {fileID: 6725945012481106582}
-  - component: {fileID: 1988551965015887467}
-  - component: {fileID: 2434845275794747422}
   m_Layer: 0
-  m_Name: Animator
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -536,28 +533,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8213077051957223580}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &9155338092208393769
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5109427712026722676}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!212 &6725945012481106582
 SpriteRenderer:
   serializedVersion: 2
@@ -617,30 +592,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
---- !u!114 &1988551965015887467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5109427712026722676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd1abec5c35e53f479d97f5ee06ece4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Enemy::Enemy.Audio.EnemyAudioRelay
---- !u!114 &2434845275794747422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5109427712026722676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36dd43ab96f790f45ae3e15d97b4bde5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Enemy::Enemy.EnemyEventRelay
 --- !u!1 &5706330855078601560
 GameObject:
   m_ObjectHideFlags: 0
@@ -710,7 +661,10 @@ GameObject:
   - component: {fileID: 5656348602568742692}
   - component: {fileID: -7358156219938456539}
   - component: {fileID: 1786758921442398474}
+  - component: {fileID: 5450410834384359611}
+  - component: {fileID: 813502240184482250}
   - component: {fileID: 5802215905982552733}
+  - component: {fileID: 6465492863446732859}
   - component: {fileID: 679012634464110374}
   m_Layer: 0
   m_Name: EnemyBase
@@ -888,6 +842,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b062fd2861fdff43b0d688da3d906c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Enemy::Enemy.EnemyBehaviourRelay
+--- !u!114 &5450410834384359611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6858735844435078928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd1abec5c35e53f479d97f5ee06ece4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Enemy::Enemy.Audio.EnemyAudioRelay
+--- !u!114 &813502240184482250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6858735844435078928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36dd43ab96f790f45ae3e15d97b4bde5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Enemy::Enemy.EnemyEventRelay
 --- !u!114 &5802215905982552733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -935,6 +913,28 @@ MonoBehaviour:
           m_Value1: 4828375022228047555
         Name: Aggressive
         m_Value: {fileID: 0}
+--- !u!95 &6465492863446732859
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6858735844435078928}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &679012634464110374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1094,5 +1094,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70096d24c7c7d0c4a895c7a5023d6c78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Enemy::Enemy.EnemyEventRegistry
-  _animationEventRelay: {fileID: 2434845275794747422}
+  _animationEventRelay: {fileID: 813502240184482250}
   _eventContainers: []
