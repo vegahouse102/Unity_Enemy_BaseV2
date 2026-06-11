@@ -29,16 +29,15 @@ namespace Enemy
 		{
 #if UNITY_EDITOR
 			Debug.Assert(_throwObject != null);
-			Debug.Assert(_curDirectionHandler != null);
 			Debug.Assert(_throwPos != null);
 #endif
 
-			if(_isAutoTurnX)
+			if(_isAutoTurnX&& _curDirectionHandler != null)
 				_curDirectionHandler.OnTurn += TurnX;
 		}
 		private void OnDestroy()
 		{
-			if (_isAutoTurnX)
+			if (_isAutoTurnX&&_curDirectionHandler != null)
 				_curDirectionHandler.OnTurn -= TurnX;
 		}
 		private void TurnX()
@@ -58,18 +57,15 @@ namespace Enemy
 		{
 			GameObject throwObject = null;
 			if (PoolManager.Instance==null)
-				throwObject = Instantiate(_throwObject,_throwPos.position,Quaternion.identity);
+				throwObject = Instantiate(_throwObject);
 			else
 			{
 				throwObject = PoolManager.Instance.GetObject(_throwObject);
-				Debug.Log(throwObject);
+				//Debug.Log(throwObject);
 			}
 				
 			throwObject.transform.position = _throwPos.position;
-				Rigidbody2D rigid = throwObject.GetComponent<Rigidbody2D>();
-#if UNITY_EDITOR
-			Debug.Assert(rigid != null);
-#endif
+			Rigidbody2D rigid = throwObject.GetComponent<Rigidbody2D>();
 			if (rigid!=null)
 			{
 				float xVelocity = _throwVelocity.x;

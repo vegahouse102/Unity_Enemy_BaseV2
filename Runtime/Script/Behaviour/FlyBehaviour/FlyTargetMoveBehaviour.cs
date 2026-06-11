@@ -10,7 +10,6 @@ namespace Enemy
 		[SerializeField] private Rigidbody2D _rigid;
 		[SerializeField] private EnemyCurDirectionHandler _directionHandler;
 		[SerializeField] private Animator _animator;
-		[SerializeField] private SensorContext _sensorContext;
 
 		[SerializeField] private string _moveBoolAnimationName;
 		[SerializeField] private bool _isFrontMove = true;
@@ -31,7 +30,6 @@ namespace Enemy
 			Debug.Assert(_directionHandler != null);
 			Debug.Assert(_rigid != null);
 			Debug.Assert(_animator != null);
-			Debug.Assert(_sensorContext != null);
 #endif
 		}
 

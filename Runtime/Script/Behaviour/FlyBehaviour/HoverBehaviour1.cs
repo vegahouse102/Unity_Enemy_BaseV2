@@ -15,8 +15,7 @@ namespace Enemy
 		private EnemyCurDirectionHandler _directionHandler;
 		[SerializeField]
 		private Animator _animator;
-		[SerializeField]
-		private SensorContext _sensorContext;
+
 
 		[Space(30)]
 		[Header("앵커로부터 radius안을 배회함, 밖으로 나가면 안으로 돌아온다")]
@@ -58,7 +57,6 @@ namespace Enemy
 			Debug.Assert(_directionHandler != null);
 			Debug.Assert(_rigid != null);
 			Debug.Assert(_animator != null);
-			Debug.Assert(_sensorContext != null);
 			Debug.Assert(_anchorPointTransform != null);
 #endif
 			_anchorPosition = _anchorPointTransform.position;
