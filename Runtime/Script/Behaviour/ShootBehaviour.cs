@@ -68,7 +68,13 @@ namespace Enemy.Cleaner
 					_lastShootTime = Time.time;
 					//Debug.Log("Shoot");
 
-					GameObject bullet = Instantiate(_bullet, _bulletPos.position,Quaternion.identity);
+					GameObject bullet = null;
+					if (PoolManager.Instance != null)
+					{
+						bullet = PoolManager.Instance.GetObject(_bullet);
+					}
+					else 
+						bullet = Instantiate(_bullet);
 					bullet.transform.position = _bulletPos.position;
 
 					Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();

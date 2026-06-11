@@ -20,8 +20,6 @@ namespace Damage
 		private void OnEnable()
 		{
 			_canAttack = true;
-			
-			_attacker = transform.root.gameObject;
 		}
 
 		private void OnTriggerEnter2D(Collider2D collider)

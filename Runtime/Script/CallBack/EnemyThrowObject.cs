@@ -56,10 +56,17 @@ namespace Enemy
 		}
 		public void Throw()
 		{
-
-			GameObject throwObject = Instantiate(_throwObject,_throwPos.position,Quaternion.identity);
-
-			Rigidbody2D rigid = throwObject.GetComponent<Rigidbody2D>();
+			GameObject throwObject = null;
+			if (PoolManager.Instance==null)
+				throwObject = Instantiate(_throwObject,_throwPos.position,Quaternion.identity);
+			else
+			{
+				throwObject = PoolManager.Instance.GetObject(_throwObject);
+				Debug.Log(throwObject);
+			}
+				
+			throwObject.transform.position = _throwPos.position;
+				Rigidbody2D rigid = throwObject.GetComponent<Rigidbody2D>();
 #if UNITY_EDITOR
 			Debug.Assert(rigid != null);
 #endif

@@ -11,7 +11,7 @@ namespace Enemy
 		private float _removeTime = 7f;
 
 		private float _startTime;
-		private void Awake()
+		private void OnEnable()
 		{
 			_startTime = Time.time;
 		}
@@ -22,7 +22,10 @@ namespace Enemy
 
 			if(Time.time >= _startTime + _removeTime)
 			{
-				Destroy(this.gameObject);
+				if (PoolManager.Instance != null)
+					PoolManager.Instance.ReleaseObject(gameObject);
+				else
+					Destroy(gameObject);
 			}
 		}
 	}
