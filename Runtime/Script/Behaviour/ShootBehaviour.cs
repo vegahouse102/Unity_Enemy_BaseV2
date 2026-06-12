@@ -71,11 +71,11 @@ namespace Enemy.Cleaner
 					GameObject bullet = null;
 					if (PoolManager.Instance != null)
 					{
-						bullet = PoolManager.Instance.GetObject(_bullet);
+						bullet = PoolManager.Instance.GetObject(_bullet, _bulletPos.position);
 					}
 					else 
-						bullet = Instantiate(_bullet);
-					bullet.transform.position = _bulletPos.position;
+						bullet = Instantiate(_bullet,_bulletPos.position,Quaternion.identity);
+		
 
 					Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
 					DamageTrigger trigger = bullet.GetComponent<DamageTrigger>();

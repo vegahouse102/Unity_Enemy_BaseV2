@@ -34,8 +34,7 @@ namespace Enemy
 			if (PoolManager.Instance == null)
 				projectile = Instantiate(_projectile);
 			else
-				projectile = PoolManager.Instance.GetObject(_projectile);
-			projectile.transform.position = _shootPos.position;
+				projectile = PoolManager.Instance.GetObject(_projectile, _shootPos.position);
 
 			Rigidbody2D rigid = projectile.GetComponent <Rigidbody2D>();
 			DamageTrigger damageTrigger = projectile.GetComponent<DamageTrigger>();

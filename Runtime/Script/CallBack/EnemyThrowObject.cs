@@ -57,14 +57,13 @@ namespace Enemy
 		{
 			GameObject throwObject = null;
 			if (PoolManager.Instance==null)
-				throwObject = Instantiate(_throwObject);
+				throwObject = Instantiate(_throwObject, _throwPos.position,Quaternion.identity);
 			else
 			{
-				throwObject = PoolManager.Instance.GetObject(_throwObject);
+				throwObject = PoolManager.Instance.GetObject(_throwObject, _throwPos.position);
 				//Debug.Log(throwObject);
 			}
 				
-			throwObject.transform.position = _throwPos.position;
 			Rigidbody2D rigid = throwObject.GetComponent<Rigidbody2D>();
 			if (rigid!=null)
 			{

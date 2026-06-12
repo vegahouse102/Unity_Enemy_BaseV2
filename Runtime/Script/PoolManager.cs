@@ -33,25 +33,24 @@ namespace Enemy
 		/// </summary>
 		/// <param name="prefab"></param>
 		/// <returns></returns>
-		public GameObject GetObject(GameObject prefab)
+		public GameObject GetObject(GameObject prefab ,Vector2 position)
 		{
 			if (prefab == null) 
 				return null;
 
 			EntityId id = prefab.GetEntityId();
 
-
 			if (_cache.TryGetValue(id, out Queue<GameObject> pool) && pool.Count > 0)
 			{
 				GameObject instance = pool.Dequeue();
 				PooledObject pooledObject = instance.GetComponent<PooledObject>();
 				_pooledObjectList.Remove(pooledObject.node);//  이미 넣어졌다면 pool과 _pooledObjectList에 없어져야함
-
+				instance.transform.position = position;
 				instance.SetActive(true);//넣어져있던 비활성화 오브젝트를 활성화함
 				return instance;
 			}
-
-			return GetNewObject(prefab);
+		
+			return GetNewObject(prefab,position);
 		}
 		/// <summary>
 		/// 이 메서드를 실행하면 반환이 된다.
@@ -131,9 +130,9 @@ namespace Enemy
 		/// </summary>
 		/// <param name="prefab">오브젝트를 생성할 prefab</param>
 		/// <returns></returns>
-		private GameObject GetNewObject(GameObject prefab)
+		private GameObject GetNewObject(GameObject prefab, Vector2 position)
 		{
-			GameObject instance = Instantiate(prefab);
+			GameObject instance = Instantiate(prefab, position,Quaternion.identity);
 			PooledObject pooledObject = instance.AddComponent<PooledObject>();
 			pooledObject.id = prefab.GetEntityId();
 			pooledObject.node = null; // 초기화시에는 null이어야함
