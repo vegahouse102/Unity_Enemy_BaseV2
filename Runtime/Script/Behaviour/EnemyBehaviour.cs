@@ -32,9 +32,18 @@ namespace Enemy
 		}
 
 
-		protected abstract Node.Status OnStartProcess();
-		protected abstract Node.Status OnUpdateProcess();
-		protected abstract void OnEndProcess();
+		protected virtual Node.Status OnStartProcess()
+		{
+			return Node.Status.Running;
+		}
+		protected virtual Node.Status OnUpdateProcess()
+		{
+			return Node.Status.Success;
+		}
+		protected virtual void OnEndProcess()
+		{
+			
+		}
 	}
 
 }

@@ -30,7 +30,11 @@ namespace Enemy
 
 		public void Fire()
 		{
-			GameObject projectile = Instantiate(_projectile);
+			GameObject projectile;
+			if (PoolManager.Instance == null)
+				projectile = Instantiate(_projectile);
+			else
+				projectile = PoolManager.Instance.GetObject(_projectile);
 			projectile.transform.position = _shootPos.position;
 
 			Rigidbody2D rigid = projectile.GetComponent <Rigidbody2D>();
