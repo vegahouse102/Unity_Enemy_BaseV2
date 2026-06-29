@@ -324,8 +324,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _spriteRenderer: {fileID: 6725945012481106582}
-  _blinkTime: 0.2
-  _blinkSpeed: 0.1
+  _hitColor: {r: 1, g: 0, b: 0, a: 1}
+  _blinkTime: 0.05
 --- !u!1 &4399371991519458137
 GameObject:
   m_ObjectHideFlags: 0
