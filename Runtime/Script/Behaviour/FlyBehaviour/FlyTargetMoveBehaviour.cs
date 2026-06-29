@@ -36,7 +36,7 @@ namespace Enemy
 		protected override Node.Status OnStartProcess()
 		{
 			InitializeTarget();
-			if (!GetTargetPosition(out _cachedTargetPosition))
+			if (!TryGetTargetPosition(out _cachedTargetPosition))
 				return Node.Status.Failure;
 
 			_animator.SetBool(_moveBoolAnimationName, true);
@@ -50,7 +50,7 @@ namespace Enemy
 		protected override Node.Status OnUpdateProcess()
 		{
 
-			if (!GetTargetPosition(out _cachedTargetPosition))
+			if (!TryGetTargetPosition(out _cachedTargetPosition))
 				return Node.Status.Failure;
 
 
@@ -94,7 +94,7 @@ namespace Enemy
 		/// <summary>
 		/// 추적할 대상의 실시간 위치 가져올 수 있으면 true 없으면 false 리턴할 것.
 		/// </summary>
-		protected abstract bool GetTargetPosition(out Vector3 targetPos);
+		protected abstract bool TryGetTargetPosition(out Vector3 targetPos);
 
 		/// <summary>
 		/// 행동이 시작될시 target을 initialize하는 메서드
