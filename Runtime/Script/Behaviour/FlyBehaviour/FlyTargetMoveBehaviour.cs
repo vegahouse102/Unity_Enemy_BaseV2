@@ -36,12 +36,8 @@ namespace Enemy
 		protected override Node.Status OnStartProcess()
 		{
 			InitializeTarget();
-			_cachedTargetPosition = GetTargetPosition();
-
-			if (_cachedTargetPosition == Vector3.positiveInfinity)
-			{
+			if (!GetTargetPosition(out _cachedTargetPosition))
 				return Node.Status.Failure;
-			}
 
 			_animator.SetBool(_moveBoolAnimationName, true);
 			_isActiveNode = true;
@@ -53,10 +49,11 @@ namespace Enemy
 
 		protected override Node.Status OnUpdateProcess()
 		{
-		
-			_cachedTargetPosition = GetTargetPosition();
 
-			
+			if (!GetTargetPosition(out _cachedTargetPosition))
+				return Node.Status.Failure;
+
+
 			if (_cachedTargetPosition == Vector3.positiveInfinity)
 			{
 				return Node.Status.Failure;
@@ -95,9 +92,9 @@ namespace Enemy
 		}
 
 		/// <summary>
-		/// 추적할 대상의 실시간 위치를 리턴. 대상이 없으면 Vector3.positiveInfinity 리턴할 것.
+		/// 추적할 대상의 실시간 위치 가져올 수 있으면 true 없으면 false 리턴할 것.
 		/// </summary>
-		protected abstract Vector3 GetTargetPosition();
+		protected abstract bool GetTargetPosition(out Vector3 targetPos);
 
 		/// <summary>
 		/// 행동이 시작될시 target을 initialize하는 메서드
@@ -118,7 +115,7 @@ namespace Enemy
 			_rigid.linearVelocity += targetDirection * _acceleration * Time.fixedDeltaTime;
 			_rigid.linearVelocity = Vector2.Lerp(_rigid.linearVelocity, targetDirection * _rigid.linearVelocity.magnitude, _steeringSensitivity);
 
-		
+
 			if (_rigid.linearVelocity.sqrMagnitude > _maxVelocity * _maxVelocity)
 			{
 				_rigid.linearVelocity = _rigid.linearVelocity.normalized * _maxVelocity;
