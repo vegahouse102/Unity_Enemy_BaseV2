@@ -45,6 +45,7 @@ namespace Enemy
 				GameObject instance = pool.Dequeue();
 				PooledObject pooledObject = instance.GetComponent<PooledObject>();
 				_pooledObjectList.Remove(pooledObject.node);//  이미 넣어졌다면 pool과 _pooledObjectList에 없어져야함
+				pooledObject.isPooled = false;
 				instance.transform.position = position;
 				instance.SetActive(true);//넣어져있던 비활성화 오브젝트를 활성화함
 				return instance;
@@ -71,6 +72,8 @@ namespace Enemy
 
 			if (instance.TryGetComponent<PooledObject>(out PooledObject pooledObject))
 			{
+				if(pooledObject.isPooled)//이미 넣어져있는경우 넣지 않기
+					return;
 
 				if (_pooledObjectList.Count >= _maxCount)
 				{
@@ -89,6 +92,7 @@ namespace Enemy
 				_cache[pooledObject.id].Enqueue(instance);
 				_pooledObjectList.AddLast(instance);
 				pooledObject.node = _pooledObjectList.Last;
+				pooledObject.isPooled = true;
 			}
 			else
 			{
@@ -116,7 +120,6 @@ namespace Enemy
 			//_pooledObjectList안의 내용물은 유효하기때문에 null이 넣어질 수 없다.  targetObj는 null 이 될 수 없다.
 			PooledObject pooledObject = targetObj.GetComponent<PooledObject>();
 
-
 			if (_cache.TryGetValue(pooledObject.id, out Queue<GameObject> pool))
 			{
 				pool.Dequeue();
@@ -136,6 +139,7 @@ namespace Enemy
 			PooledObject pooledObject = instance.AddComponent<PooledObject>();
 			pooledObject.id = prefab.GetEntityId();
 			pooledObject.node = null; // 초기화시에는 null이어야함
+			pooledObject.isPooled = false;
 			instance.transform.parent = transform;
 			return instance;
 		}
@@ -145,5 +149,6 @@ namespace Enemy
 	{
 		public LinkedListNode<GameObject> node; // 조건 처음 생성시에는 null 반환될때 반환될시  LinkedList의 노드 주소가 저장됨
 		public EntityId id; // 오브젝트의 prefab의 entityid 오브젝트가 생성될시에 초기화됨
+		public bool isPooled;
 	}
 }
