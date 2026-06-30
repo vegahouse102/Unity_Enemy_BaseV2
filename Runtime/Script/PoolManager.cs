@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Enemy
 {
@@ -39,7 +40,7 @@ namespace Enemy
 				return null;
 
 			EntityId id = prefab.GetEntityId();
-
+			GameObject obj = null;
 			if (_cache.TryGetValue(id, out Queue<GameObject> pool) && pool.Count > 0)
 			{
 				GameObject instance = pool.Dequeue();
@@ -48,10 +49,13 @@ namespace Enemy
 				pooledObject.isPooled = false;
 				instance.transform.position = position;
 				instance.SetActive(true);//넣어져있던 비활성화 오브젝트를 활성화함
-				return instance;
+				obj = instance;
 			}
-		
-			return GetNewObject(prefab,position);
+			else
+				obj =  GetNewObject(prefab,position);
+			
+			obj.transform.parent = transform;
+			return obj;
 		}
 		/// <summary>
 		/// 이 메서드를 실행하면 반환이 된다.
@@ -140,6 +144,7 @@ namespace Enemy
 			pooledObject.id = prefab.GetEntityId();
 			pooledObject.node = null; // 초기화시에는 null이어야함
 			pooledObject.isPooled = false;
+
 			instance.transform.parent = transform;
 			return instance;
 		}
@@ -150,5 +155,20 @@ namespace Enemy
 		public LinkedListNode<GameObject> node; // 조건 처음 생성시에는 null 반환될때 반환될시  LinkedList의 노드 주소가 저장됨
 		public EntityId id; // 오브젝트의 prefab의 entityid 오브젝트가 생성될시에 초기화됨
 		public bool isPooled;
+		private void Awake()
+		{
+			SceneManager.sceneLoaded += Release;
+		}
+		private void OnDestroy()
+		{
+			SceneManager.sceneLoaded -= Release;
+		}
+		private void Release(Scene scene,LoadSceneMode mode)
+		{
+			if (PoolManager.Instance != null)
+			{
+				PoolManager.Instance.ReleaseObject(this.gameObject);
+			}
+		}
 	}
 }
