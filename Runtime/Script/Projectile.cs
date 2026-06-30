@@ -9,7 +9,8 @@ namespace Enemy
 
 		[SerializeField,Min(0)]
 		private float _removeTime = 7f;
-
+		[SerializeField]
+		private bool _poolManagerEnable = true;
 		private float _startTime;
 		private void OnEnable()
 		{
@@ -22,7 +23,7 @@ namespace Enemy
 
 			if(Time.time >= _startTime + _removeTime)
 			{
-				if (PoolManager.Instance != null)
+				if (_poolManagerEnable&& PoolManager.Instance != null)
 					PoolManager.Instance.ReleaseObject(gameObject);
 				else
 					Destroy(gameObject);
