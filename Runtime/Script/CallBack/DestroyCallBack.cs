@@ -5,7 +5,10 @@ namespace Enemy.Callback
 	{
 		public void Destory()
 		{
-			Destroy(gameObject);
+			if (PoolManager.Instance != null)
+				PoolManager.Instance.ReleaseObject(gameObject);
+			else
+				Destroy(gameObject);
 		}
 	}
 }

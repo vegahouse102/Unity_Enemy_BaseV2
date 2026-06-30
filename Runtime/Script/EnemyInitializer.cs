@@ -10,7 +10,7 @@ namespace Enemy
 		EnemyHealthSO _healthSO;
 
 
-		void Start()
+		void OnEnable()
 		{
 
 #if UNITY_EDITOR
