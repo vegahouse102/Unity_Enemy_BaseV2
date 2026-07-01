@@ -8,14 +8,18 @@ namespace Enemy
 
 
 		private int _curHealth;
+		[SerializeField]
 		private EnemyHealthSO _enemyHealthSO;
 
-		public UnityEvent<DamageInfo> OnDead;
+		public UnityEvent<DamageInfo> OnDeath;
 		public UnityEvent<DamageInfo> OnHurt;
 
-		public void Initialize(EnemyHealthSO enemyHealthSO)
+		private void OnEnable()
 		{
-			_enemyHealthSO = enemyHealthSO;
+			Initialize();
+		}
+		private void Initialize()
+		{
 			_curHealth = _enemyHealthSO.MaxHealth;
 		}
 		public int GetCurHealth()
@@ -33,10 +37,11 @@ namespace Enemy
 			{
 				return;
 			}
+			Debug.Log(damageInfo.Damage);
 			_curHealth =  Mathf.Max(0,_curHealth- (int)damageInfo.Damage);
 			if(_curHealth <= 0)
 			{
-				OnDead?.Invoke(damageInfo);
+				OnDeath?.Invoke(damageInfo);
 			}
 			else
 			{

@@ -1,79 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1174640788952401251
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5087854999844225998}
-  - component: {fileID: 1698338821335540708}
-  m_Layer: 0
-  m_Name: Health
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5087854999844225998
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1174640788952401251}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8213077051957223580}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1698338821335540708
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1174640788952401251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99269879a989e40448e46bae690cab3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Enemy::Enemy.EnemyHealth
-  OnDead:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5656348602568742692}
-        m_TargetAssemblyTypeName: Enemy.EnemyDamageRelay, Enemy
-        m_MethodName: Dead
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnHurt:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5656348602568742692}
-        m_TargetAssemblyTypeName: Enemy.EnemyDamageRelay, Enemy
-        m_MethodName: Hurt
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &1197552841963146681
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,7 +56,7 @@ MonoBehaviour:
     _enemyBehaviour: {fileID: 9004252157370004968}
   - _behaviorName: Turn
     _enemyBehaviour: {fileID: 4359325066517073593}
-  - _behaviorName: Walk
+  - _behaviorName: Move
     _enemyBehaviour: {fileID: 1374012193789000184}
   _childBehaviourContainers: []
 --- !u!1 &1291165756424167354
@@ -205,9 +131,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4503575043949490037}
   - component: {fileID: 3598940853013212569}
+  - component: {fileID: 5020314560382289530}
   m_Layer: 0
   m_Name: Hitbox
-  m_TagString: Hitbox
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -273,6 +200,33 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &5020314560382289530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768760398174183429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7921c8f71e25dca41be904cf2bc624b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Damage::Damage.DamageReceiver
+  OnReceiveDamage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3660532338093965824}
+        m_TargetAssemblyTypeName: Enemy.EnemyHealth, Enemy
+        m_MethodName: GetDamage
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2101593864943619402
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,7 +607,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8213077051957223580}
   - component: {fileID: 4982436358754516707}
-  - component: {fileID: 8891171314740641924}
   - component: {fileID: 6940280806520128720}
   - component: {fileID: 4023770342082182608}
   - component: {fileID: 5736935370284663797}
@@ -665,7 +618,7 @@ GameObject:
   - component: {fileID: 813502240184482250}
   - component: {fileID: 5802215905982552733}
   - component: {fileID: 6465492863446732859}
-  - component: {fileID: 679012634464110374}
+  - component: {fileID: 3660532338093965824}
   m_Layer: 0
   m_Name: EnemyBase
   m_TagString: Enemy
@@ -687,7 +640,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4871953279370843311}
-  - {fileID: 5087854999844225998}
   - {fileID: 4503575043949490037}
   - {fileID: 6480943682163611294}
   - {fileID: 3424924038492350565}
@@ -723,33 +675,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &8891171314740641924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6858735844435078928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7921c8f71e25dca41be904cf2bc624b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Damage::Damage.DamageReceiver
-  OnReceiveDamage:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1698338821335540708}
-        m_TargetAssemblyTypeName: Enemy.EnemyHealth, Enemy
-        m_MethodName: GetDamage
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &6940280806520128720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -935,7 +860,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &679012634464110374
+--- !u!114 &3660532338093965824
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -944,11 +869,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 6858735844435078928}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 052639a9f1ff35a4382a1e2f62448728, type: 3}
+  m_Script: {fileID: 11500000, guid: 99269879a989e40448e46bae690cab3f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
-  _health: {fileID: 1698338821335540708}
-  _healthSO: {fileID: 0}
+  m_EditorClassIdentifier: Enemy::Enemy.EnemyHealth
+  _enemyHealthSO: {fileID: 0}
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5656348602568742692}
+        m_TargetAssemblyTypeName: Enemy.EnemyDamageRelay, Enemy
+        m_MethodName: Death
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnHurt:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5656348602568742692}
+        m_TargetAssemblyTypeName: Enemy.EnemyDamageRelay, Enemy
+        m_MethodName: Hurt
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8285511784688588787
 GameObject:
   m_ObjectHideFlags: 0

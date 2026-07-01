@@ -6,69 +6,77 @@ namespace Damage
 	public class DamageTrigger : MonoBehaviour
 	{
 
-		[Header("데미지 컴포넌트")]
-		[Header("감지하고자 하는 collider의 tag가 Hitbox여야함")]
-
 
 		[SerializeField] private float _damage;
-		[SerializeField] private bool _isOneHitDamage = true;
 		[SerializeField] private LayerMask _targetLayer;
-		[SerializeField] private bool _isOnUpdate = false;
-		[SerializeField] GameObject _attacker;
-		private bool _canAttack = true;
 
+		[SerializeField] GameObject _attacker;
+		[SerializeField] private bool _isOneHitDamage = true;
+		private bool _canAttack = true;
+		private bool _isEntered;
+		private int _isEnterColliderCount;
 		private void OnEnable()
 		{
 			_canAttack = true;
+			_isEnterColliderCount = 0;
+			_isEntered = false;
 		}
-
+		private void OnTriggerStay2D(Collider2D collision)
+		{
+			
+		}
 		private void OnTriggerEnter2D(Collider2D collider)
 		{
+			if (!TryGetDamageReceiver(collider, out DamageReceiver receiver))
+				return;
+
+			_isEnterColliderCount++;
+
 			if (!_canAttack) return;
 
-			if (_isOnUpdate) return;
+			if (_isEntered) return;
 
-			if (!collider.gameObject.CompareTag("Hitbox")) return;
-
-			if (IsContainLayer(collider.gameObject.layer, _targetLayer))
-			{
-				if (collider.attachedRigidbody.TryGetComponent<DamageReceiver>(out var playerDamageReceiver))
-				{
-					playerDamageReceiver.ReceiveDamage(new DamageInfo(_attacker, _damage));
-
-			
-					if (_isOneHitDamage)
-					{
-						_canAttack = false;
-					}
-				}
-			}
+			Damage(receiver);
+			_isEntered = true;
 		}
 
 
-		private void OnTriggerStay2D(Collider2D collider)
+		private void OnTriggerExit2D(Collider2D collision)
 		{
-			if (!_canAttack) return;
 
-			if (!_isOnUpdate) return;
+			if (TryGetDamageReceiver(collision,out DamageReceiver receiver)) { 
+				_isEnterColliderCount--;
+				//Debug.Log(_isEnterColliderCount);
+				if (_isEnterColliderCount == 0)
+					_isEntered = false;
+			}
+		}
 
-			if (!collider.gameObject.CompareTag("Hitbox")) return;
+		private void Damage(DamageReceiver receiver)
+		{
+			receiver.ReceiveDamage(new DamageInfo(_attacker, _damage));
+
+			if (_isOneHitDamage)
+			{
+				_canAttack = false;
+			}
 
 
 
+		}
+		private bool TryGetDamageReceiver(Collider2D collider,out DamageReceiver receiver)
+		{
 			if (IsContainLayer(collider.gameObject.layer, _targetLayer))
 			{
-				if (collider.attachedRigidbody.TryGetComponent<DamageReceiver>(out var playerDamageReceiver))
+				DamageReceiver targetReceiver = collider.GetComponentInParent<DamageReceiver>();
+				if (targetReceiver != null)
 				{
-					playerDamageReceiver.ReceiveDamage(new DamageInfo(_attacker, _damage));
-
-
-					if (_isOneHitDamage)
-					{
-						_canAttack = false;
-					}
+					receiver = targetReceiver;
+					return true;
 				}
 			}
+			receiver = null;
+			return false;
 		}
 		public void SetDamage(float damage)
 		{
