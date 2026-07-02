@@ -1,6 +1,6 @@
 
 using UnityEngine;
-
+using UnityEngine.Events;
 namespace Damage
 {
 	public class DamageTrigger : MonoBehaviour
@@ -12,18 +12,16 @@ namespace Damage
 
 		[SerializeField] GameObject _attacker;
 		[SerializeField] private bool _isOneHitDamage = true;
+		public UnityEvent OnDamaged;
 		private bool _canAttack = true;
 		private bool _isEntered;
 		private int _isEnterColliderCount;
+
 		private void OnEnable()
 		{
 			_canAttack = true;
 			_isEnterColliderCount = 0;
 			_isEntered = false;
-		}
-		private void OnTriggerStay2D(Collider2D collision)
-		{
-			
 		}
 		private void OnTriggerEnter2D(Collider2D collider)
 		{
@@ -55,7 +53,7 @@ namespace Damage
 		private void Damage(DamageReceiver receiver)
 		{
 			receiver.ReceiveDamage(new DamageInfo(_attacker, _damage));
-
+			OnDamaged?.Invoke();
 			if (_isOneHitDamage)
 			{
 				_canAttack = false;
