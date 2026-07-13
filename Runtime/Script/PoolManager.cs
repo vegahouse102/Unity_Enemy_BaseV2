@@ -34,7 +34,7 @@ namespace Enemy
 		/// </summary>
 		/// <param name="prefab"></param>
 		/// <returns></returns>
-		public GameObject GetObject(GameObject prefab ,Vector2 position)
+		public GameObject GetObject(GameObject prefab ,Vector3 position)
 		{
 			if (prefab == null) 
 				return null;
@@ -137,7 +137,7 @@ namespace Enemy
 		/// </summary>
 		/// <param name="prefab">오브젝트를 생성할 prefab</param>
 		/// <returns></returns>
-		private GameObject GetNewObject(GameObject prefab, Vector2 position)
+		private GameObject GetNewObject(GameObject prefab, Vector3 position)
 		{
 			GameObject instance = Instantiate(prefab, position,Quaternion.identity);
 			PooledObject pooledObject = instance.AddComponent<PooledObject>();
